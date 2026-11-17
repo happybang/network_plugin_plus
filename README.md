@@ -2,7 +2,7 @@
 
 # ⚡️ Network+ 
 
-### 专为开发者打造的 Chrome DevTools 极速网络复制与模版导出神器
+### Fast Network Inspection, Clean cURL & Custom Template Exporter for Chrome DevTools
 
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-blue.svg?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
 [![CI](https://github.com/happybang/network_plugin_plus/actions/workflows/ci.yml/badge.svg)](https://github.com/happybang/network_plugin_plus/actions)
@@ -11,109 +11,113 @@
 [![Pure Vanilla JS](https://img.shields.io/badge/Dependencies-0-orange.svg)](#)
 
 <p align="center">
-  <b>让接口复制不再痛苦：一键复制纯净 cURL、提取 Token、按自定义模版导出 API 调试信息。</b>
+  <b>Stop painful copy-pasting: One-click Clean cURL, instant Token extraction, and customizable template exporting.</b>
   <br />
-  零学习成本 · 高仿 Chrome 原生体验 · 完全本地离线运行
+  Zero learning curve • Native DevTools look & feel • 100% offline & local
+  <br /><br />
+  <b>English</b> • <a href="README_zh.md">简体中文</a>
 </p>
 
-[痛点对比](#-为什么需要-network) • [核心特性](#-核心特性) • [模版玩法](#-自由定制模版模版语法) • [快速安装](#-1-分钟安装指南) • [安全与隐私](#-安全与隐私承诺)
+[Pain Points](#-pain-points-why-network) • [Key Features](#-key-features) • [Template Syntax](#-custom-template-engine) • [Installation](#-quick-start) • [Security & Privacy](#-security--privacy)
 
 ---
 
 </div>
 
-## 😩 痛点直击：原生 Network 到底有多繁琐？
+## 😩 Pain Points: Why Native Network Panel Slows You Down
 
-每天联调接口、给后端提 Bug、写 API 文档或调试时，你是否受够了以下操作：
+When debugging APIs, reporting bugs, writing docs, or collaborating with backend engineers, native DevTools is full of friction:
 
-| 场景 | 原生 Chrome DevTools 的痛苦过程 | ⚡️ Network+ 的解法 |
+| Scenario | Native Chrome DevTools Frustrations | ⚡️ Network+ Solution |
 | :--- | :--- | :--- |
-| **复制 cURL** | 拷出来的 cURL 带了 20+ 行 `sec-ch-ua*`、`sec-fetch-*` 垃圾浏览头，终端里糊成一团 | **一键生成 Clean cURL**，自动过滤噪点头，清爽可读，直接发给同事 |
-| **提取 Token / Header** | 点开请求 -> 切 Headers 标签 -> 鼠标滑动翻找 -> 小心翼翼双击选中复制，稍不注意拷到空格 | **首行直接提取**，一键拷走 `Authorization` 或 `Cookie` |
-| **复制 Request Body** | 点开请求 -> 切 Payload 标签 -> 点 `view source` -> 全选 -> 复制 | **行内直出 `[Req]` 按钮**，1 击到位 |
-| **发接口 Bug 给同事** | 手动分别复制 URL、入参、出参、Token，再手动贴进飞书/钉钉/Jira 排版 | **`[模版]` 一键复制**，直接按预设 Markdown / 文本格式全自动组装！ |
-| **点击成本** | 右键 -> 瞄准二级菜单 Copy -> 在十几个选项里找 | **表格右侧行内胶囊 + 置顶专属右键菜单** |
+| **Copy cURL** | Copies 20+ lines of cluttering browser noise (`sec-ch-ua*`, `sec-fetch-*`), messing up terminal output and scripts | **One-click Clean cURL**: Strips noisy headers automatically, keeping commands crisp, clean, and share-ready |
+| **Copy Token / Header** | Click request -> switch to Headers tab -> scroll & find -> mouse-select token value carefully | **Direct extraction**: One-click to copy `Authorization` token or `Cookie` |
+| **Copy Request Body** | Click request -> switch to Payload tab -> click `view source` -> select all -> copy | **Instant `[Req]` capsule button** on the row |
+| **Report API Bug to Team** | Manually copy URL, request body, response, and token, then stitch and format in Slack/Teams/Jira | **One-click `[Tpl]`**: Formats all data automatically using your customized template |
+| **Click Overhead** | Right click -> hover over Copy submenu -> hunt through 10+ options | **Zero-click submenus**: High-priority capsule buttons right on each table row |
 
 ---
 
-## ✨ 核心特性
+## ✨ Key Features
 
-### 1. 📑 自由定制模版引擎（杀手级特性）
-支持自定义任意结构的文本模版，使用如 `{{url}}`、`{{header.Authorization}}`、`{{request.body}}` 等直观占位符。
-- **点击顶部「⚙️ 模版」**：随时新增、编辑、删除你的专属模版；
-- **所见即所得**：输入模版时，下方实时使用当前真实接口渲染预览；
-- **行内首位秒拷**：表格行内将 **`[模版]`** 按钮置于第一位，点一下直接按默认模版将内容装配入剪贴板！
+### 1. 📑 Custom Template Engine (Game Changer)
+Compose your own export formats using simple placeholders like `{{url}}`, `{{header.Authorization}}`, `{{request.body}}`, and `{{response.body}}`.
+- **Top Toolbar「⚙️ Templates」**: Add, edit, rename, and manage custom templates anytime;
+- **Live Preview**: See real-time formatted output using actual inspected requests as you type;
+- **Row-level Primary Action**: The **`[Tpl]`** button is placed first in the row action group for instant 1-click exporting!
 
-### 2. 🧹 纯净版 cURL (Clean cURL)
-原生 `Copy as cURL` 会把浏览器的指纹和安全头一股脑全带上（经常多达 30 行），导致终端阅读极其困难。
-- Network+ 智能过滤 `sec-ch-ua`、`sec-fetch-dest`、`accept-language`、`priority` 等无意义噪点头；
-- 仅保留 `Authorization`、`Content-Type`、`Cookie` 等核心数据，干净优雅。
+### 2. 🧹 Clean cURL Generator
+Standard `Copy as cURL` clutters terminal history with browser telemetry headers.
+- Network+ intelligently strips `sec-ch-ua*`, `sec-fetch-*`, `accept-language`, `priority`, and other noise;
+- Retains only essential headers (`Authorization`, `Content-Type`, `Cookie`), ready to run in terminal or import into Postman.
 
-### 3. 🎯 零层级交互，行内 1 击即拷
-表格行内直接提供独立操作胶囊：
+### 3. 🎯 Zero-Click Submenu: Inline Action Pills
+Every row has dedicated, instant action pills:
 ```text
-[模版]  [cURL]  [URL]  [Req]  [Resp]  [Auth]  [Cookie]
+[Tpl]  [cURL]  [URL]  [Req]  [Resp]  [Auth]  [Cookie]
 ```
-无需进入二级菜单，无需切换 Tab，鼠标悬停或轻点即可完成复制。
+No nested menus, no tab switching — click once and it's in your clipboard.
 
-### 4. 🎨 100% 原生级视觉与无缝适配
-- 完美契合 Chrome DevTools 设计语言；
-- 自动跟随系统的**暗黑 / 明亮主题**切换；
-- 包含实时搜索过滤、资源类型筛选（All / Fetch / JS / CSS 等）、清空与日志持久化。
+### 4. 🎨 100% Native DevTools Experience
+- Matches Chrome DevTools design aesthetics seamlessly;
+- Automatically syncs with **Dark / Light theme** based on your DevTools settings;
+- Real-time search filter, resource type pills (All / Fetch / JS / CSS / Img / Doc), and split-view details drawer.
 
 ---
 
-## 📖 自由定制模版：模版语法与经典预设
+## 📖 Custom Template Engine: Syntax & Presets
 
-### 常用占位符速查表
+### Available Placeholders
 
-| 变量 | 说明 | 示例渲染结果 |
+| Placeholder | Description | Example Output |
 | :--- | :--- | :--- |
-| `{{url}}` | 完整请求 URL | `https://api.example.com/v1/user?id=1001` |
-| `{{path}}` | 接口路径 | `/v1/user` |
-| `{{method}}` | 请求方式 | `POST` / `GET` |
-| `{{status}}` | 状态码 | `200` |
-| `{{time}}` | 耗时 | `48 ms` |
-| `{{header.HeaderName}}` | **提取任意指定请求头** | `{{header.Authorization}}`、`{{header.x-request-id}}` |
-| `{{resp.header.HeaderName}}` | **提取任意指定响应头** | `{{resp.header.Content-Type}}` |
-| `{{request.body}}` | 请求载荷（自动美化 JSON） | `{\n  "role": "admin"\n}` |
-| `{{response.body}}` | 接口返回体（自动美化 JSON） | `{\n  "code": 0,\n  "data": {...}\n}` |
-| `{{curl}}` | 纯净版 cURL 命令行 | `curl '...' -H '...'` |
+| `{{url}}` | Full Request URL | `https://api.example.com/v1/user?id=1001` |
+| `{{path}}` | URL Pathname | `/v1/user` |
+| `{{method}}` | HTTP Method | `POST` / `GET` |
+| `{{status}}` | HTTP Status Code | `200` |
+| `{{time}}` | Duration | `48 ms` |
+| `{{size}}` | Transferred Size | `1.4 kB` |
+| `{{header.HeaderName}}` | **Extract any Request Header** | `{{header.Authorization}}`, `{{header.x-request-id}}` |
+| `{{resp.header.HeaderName}}`| **Extract any Response Header** | `{{resp.header.Content-Type}}` |
+| `{{request.body}}` | Formatted Request Body (JSON/Text) | `{\n  "role": "admin"\n}` |
+| `{{response.body}}` | Formatted Response Body (JSON/Text)| `{\n  "code": 0\n}` |
+| `{{curl}}` | Clean cURL Command | `curl '...' -H '...'` |
+| `{{curl.full}}` | Full cURL Command | Including all browser headers |
 
 ---
 
-### 💡 经典实战预设推荐
+### 💡 Built-in Presets
 
-#### 预设 A：Bug 提报与接口联调（开箱自带）
+#### Preset A: Bug Report (Default)
 ```text
-【接口】{{method}} {{path}} ({{status}})
-【URL】{{url}}
-【Token】{{header.authorization}}
-【请求入参】:
+[API] {{method}} {{path}} ({{status}})
+[URL] {{url}}
+[Token] {{header.authorization}}
+[Request]:
 {{request.body}}
-【接口返回】:
+[Response]:
 {{response.body}}
 ```
 
-#### 预设 B：Markdown 接口文档 / 笔记
+#### Preset B: Markdown API Documentation
 ````markdown
-### 接口: `{{method}} {{path}}`
+### API: `{{method}} {{path}}`
 - **URL**: `{{url}}`
-- **状态**: `{{status}}`
+- **Status**: `{{status}}`
 - **Token**: `{{header.authorization}}`
 
 ```json
-// Request Body
+// Request
 {{request.body}}
 ```
 
 ```json
-// Response Body
+// Response
 {{response.body}}
 ```
 ````
 
-#### 预设 C：排错三件套
+#### Preset C: URL + Token Debugging
 ```text
 URL: {{url}}
 Authorization: {{header.authorization}}
@@ -123,54 +127,55 @@ Payload: {{request.body}}
 
 ---
 
-## 🚀 1 分钟安装指南
+## 🚀 Quick Start
 
-本项目采用纯前端原生开发，**无需任何构建编译**，开箱即用：
+Zero build steps required. Pure Vanilla JS running directly in Chrome:
 
-1. **克隆或下载本项目到本地**：
+1. **Clone this repository**:
    ```bash
    git clone https://github.com/happybang/network_plugin_plus.git
    ```
 
-2. **在 Chrome 中加载扩展**：
-   - 打开 Chrome，在地址栏输入：`chrome://extensions/`；
-   - 打开右上角的 **“开发者模式” (Developer mode)** 开关；
-   - 点击左上角的 **“加载已解压的扩展程序” (Load unpacked)**；
-   - 选择刚刚下载/克隆的项目目录。
+2. **Load Unpacked Extension in Chrome**:
+   - Open Chrome and navigate to `chrome://extensions/`
+   - Enable **Developer mode** (toggle in the top-right corner)
+   - Click **Load unpacked** (top-left button)
+   - Select the `network_plugin_plus` folder
 
-3. **开始使用**：
-   - 按 `F12` 打开控制台，在标签栏找到并点击 **`Network+`**；
-   - 触发网络请求，右键或直接点击行内的 **`[模版]`** 按钮试试吧！
-
----
-
-## 🔒 安全与隐私承诺
-
-- **100% 本地运行**：基于 Chrome 官方 Manifest V3 标准与 DevTools Network API，不含任何外部追踪、统计或上传脚本；
-- **零网络外发**：所有数据均在你的浏览器本地处理，连你的自定义模版也仅保存在本地 `localStorage` 中；
-- **企业级安全**：代码完全透明开源，无第三方 npm 依赖包，审计无忧。
+3. **Start Using**:
+   - Press `F12` (or right-click -> `Inspect`) to open DevTools
+   - Click the **`Network+`** tab in the top navigation
+   - Trigger any network request, then click **`[Tpl]`** or right-click to copy!
 
 ---
 
-## 🧪 单元测试
+## 🔒 Security & Privacy
 
-核心逻辑（cURL 生成、Noise Header 剥离、模版渲染引擎等）配备严格的自动化测试：
+- **100% Local Execution**: Built strictly on Chrome Manifest V3 and official DevTools Network APIs;
+- **Zero Network Outbound**: No telemetry, no tracking, and no external analytics. Your requests and tokens never leave your machine;
+- **Zero Third-party Dependencies**: Completely auditable, transparent Vanilla JS.
+
+---
+
+## 🧪 Testing
+
+The core utility logic (cURL generation, noise header removal, template rendering engine) is covered by comprehensive unit tests:
 
 ```bash
 npm test
-# 或者使用 Node 原生测试运行器：
+# Or run with Node built-in test runner:
 node --test tests/utils.test.js
 ```
 
 ---
 
-## 🤝 贡献与反馈
+## 🤝 Contributing
 
-如果你有任何建议、新特性构想或遇到了 Bug：
-- 欢迎提交 [Issue](https://github.com/happybang/network_plugin_plus/issues)
-- 欢迎发起 [Pull Request](https://github.com/happybang/network_plugin_plus/pulls)
+Contributions, bug reports, and suggestions are warmly welcomed!
+- Feel free to open an [Issue](https://github.com/happybang/network_plugin_plus/issues)
+- Submit a [Pull Request](https://github.com/happybang/network_plugin_plus/pulls)
 
-**如果你觉得这个小工具帮你节省了时间，请给它点一个 ⭐️ Star 鼓励一下吧！**
+**If Network+ saves you time, please give it a ⭐️ on GitHub!**
 
 ---
 

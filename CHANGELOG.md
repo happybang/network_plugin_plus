@@ -15,12 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Live preview modal for adding, editing, and deleting customizable templates.
   - Variable insertion tags for quick template composition.
   - Real-time rendering with `{{url}}`, `{{path}}`, `{{method}}`, `{{status}}`, `{{header.<Name>}}`, `{{request.body}}`, `{{response.body}}`, and `{{curl}}`.
-  - Row-level `[模版]` shortcut placed first in the quick copy actions.
-  - Dedicated `模版` tab in the request details drawer.
+  - Row-level `[Tpl]` shortcut placed first in the quick copy actions.
+  - Dedicated `Template` tab in the request details drawer.
 - **Clean cURL Generation**:
   - Automatically filters browser noise headers (`sec-ch-ua*`, `sec-fetch-*`, `accept-encoding`, etc.) for concise terminal/Postman execution.
 - **One-click Quick Actions**:
-  - Row buttons: `[模版]`, `[cURL]`, `[URL]`, `[Req]`, `[Resp]`, `[Auth]`, `[Cookie]`.
+  - Row buttons: `[Tpl]`, `[cURL]`, `[URL]`, `[Req]`, `[Resp]`, `[Auth]`, `[Cookie]`.
 - **Custom Context Menu**:
   - Right-click any request row for instant copying of Clean cURL, Full cURL, URL, Response plaintext, Request body, and specific headers.
 - **Filter & Search**:

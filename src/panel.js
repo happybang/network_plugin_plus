@@ -232,7 +232,7 @@ function renderTable() {
     const authHeader = getHeader(req.requestHeaders, 'Authorization');
     const cookieHeader = getHeader(req.requestHeaders, 'Cookie');
     const activeTpl = state.templates.find((t) => t.id === state.activeTemplateId) || state.templates[0];
-    const tplTitle = activeTpl ? `按默认模版复制: ${escapeHtml(activeTpl.name)}` : '按模版复制';
+    const tplTitle = activeTpl ? `Copy via default template: ${escapeHtml(activeTpl.name)}` : 'Copy via template';
 
     row.innerHTML = `
       <div class="td col-name" title="${escapeHtml(req.url)}">
@@ -248,7 +248,7 @@ function renderTable() {
       <div class="td col-size">${formatSize(req.size)}</div>
       <div class="td col-time">${formatTime(req.time)}</div>
       <div class="td col-actions">
-        <button class="quick-action-btn quick-action-primary" data-action="quick-tpl" title="${tplTitle}">模版</button>
+        <button class="quick-action-btn quick-action-primary" data-action="quick-tpl" title="${tplTitle}">Tpl</button>
         <button class="quick-action-btn" data-action="quick-curl" title="Copy clean cURL">cURL</button>
         <button class="quick-action-btn" data-action="quick-url" title="Copy URL">URL</button>
         <button class="quick-action-btn" data-action="quick-req" title="Copy Request Body">Req</button>
@@ -745,7 +745,7 @@ el.tplNameInput.addEventListener('input', () => {
   // Update name in sidebar list in real time
   const activeItem = el.templateList.querySelector('.tpl-item.active');
   if (activeItem) {
-    activeItem.textContent = el.tplNameInput.value || '未命名模版';
+    activeItem.textContent = el.tplNameInput.value || 'Untitled Template';
   }
 });
 
@@ -771,7 +771,7 @@ el.varTags.addEventListener('click', (e) => {
 el.btnNewTemplate.addEventListener('click', () => {
   const newTpl = {
     id: `tpl_custom_${Date.now()}`,
-    name: '新建自定义模版',
+    name: 'New Custom Template',
     content: '{{method}} {{url}}\nToken: {{header.authorization}}\nPayload:\n{{request.body}}\nResponse:\n{{response.body}}',
   };
   state.templates.push(newTpl);
@@ -783,7 +783,7 @@ el.btnNewTemplate.addEventListener('click', () => {
 el.btnSaveTemplate.addEventListener('click', () => {
   const cur = state.templates.find((t) => t.id === state.editingTemplateId);
   if (!cur) return;
-  cur.name = el.tplNameInput.value.trim() || '未命名模版';
+  cur.name = el.tplNameInput.value.trim() || 'Untitled Template';
   cur.content = el.tplContentInput.value;
   saveTemplates();
   showToast('Template saved successfully!');
@@ -799,7 +799,7 @@ el.btnSaveTemplate.addEventListener('click', () => {
 // Delete Template
 el.btnDeleteTemplate.addEventListener('click', () => {
   if (state.templates.length <= 1) {
-    alert('至少需要保留一个模版，无法删除全部模版。');
+    alert('At least one template must be kept.');
     return;
   }
   const idx = state.templates.findIndex((t) => t.id === state.editingTemplateId);
@@ -814,7 +814,7 @@ el.btnDeleteTemplate.addEventListener('click', () => {
 
 // Reset Templates to Default
 el.btnResetTemplates.addEventListener('click', () => {
-  if (confirm('确认恢复系统默认模版？你的所有自定义模版将被重置。')) {
+  if (confirm('Are you sure you want to reset to default templates? All custom templates will be overwritten.')) {
     state.templates = JSON.parse(JSON.stringify(DEFAULT_TEMPLATES));
     state.activeTemplateId = state.templates[0].id;
     saveTemplates();

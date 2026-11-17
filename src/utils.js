@@ -204,18 +204,18 @@ export function filterRequests(requests, query = '', typeFilter = 'all') {
 export const DEFAULT_TEMPLATES = [
   {
     id: 'tpl_bug_report',
-    name: 'Bug 提报格式',
-    content: `【接口】{{method}} {{path}} ({{status}})
-【URL】{{url}}
-【Token】{{header.authorization}}
-【请求入参】:
+    name: 'Bug Report',
+    content: `[API] {{method}} {{path}} ({{status}})
+[URL] {{url}}
+[Token] {{header.authorization}}
+[Request]:
 {{request.body}}
-【接口返回】:
+[Response]:
 {{response.body}}`,
   },
   {
     id: 'tpl_token_url',
-    name: 'URL + Token 排错',
+    name: 'URL + Token Debug',
     content: `URL: {{url}}
 Authorization: {{header.authorization}}
 Cookie: {{header.cookie}}
@@ -223,10 +223,10 @@ Payload: {{request.body}}`,
   },
   {
     id: 'tpl_markdown',
-    name: 'Markdown 文档格式',
-    content: `### 接口: \`{{method}} {{path}}\`
+    name: 'Markdown API Spec',
+    content: `### API: \`{{method}} {{path}}\`
 - **URL**: \`{{url}}\`
-- **状态**: \`{{status}}\`
+- **Status**: \`{{status}}\`
 - **Token**: \`{{header.authorization}}\`
 
 \`\`\`json
