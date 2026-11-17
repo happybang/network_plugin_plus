@@ -1,16 +1,29 @@
 {
-  "name": "chrome-network-copier",
+  "name": "network_plugin_plus",
   "version": "1.0.0",
-  "description": "Chrome DevTools Network Copier Extension",
+  "description": "Chrome DevTools Network Copier & Template Exporter Extension",
   "type": "module",
+  "main": "src/panel.js",
   "scripts": {
     "test": "node --test tests/utils.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/happybang/network_plugin_plus.git"
   },
   "keywords": [
     "chrome-extension",
     "devtools",
-    "network"
+    "network",
+    "curl",
+    "api",
+    "debugging",
+    "copy-as-curl"
   ],
-  "author": "",
-  "license": "MIT"
+  "author": "happybang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/happybang/network_plugin_plus/issues"
+  },
+  "homepage": "https://github.com/happybang/network_plugin_plus#readme"
 }

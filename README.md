@@ -5,8 +5,9 @@
 ### 专为开发者打造的 Chrome DevTools 极速网络复制与模版导出神器
 
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-blue.svg?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
+[![CI](https://github.com/happybang/network_plugin_plus/actions/workflows/ci.yml/badge.svg)](https://github.com/happybang/network_plugin_plus/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/happybang/network_plugin_plus/pulls)
 [![Pure Vanilla JS](https://img.shields.io/badge/Dependencies-0-orange.svg)](#)
 
 <p align="center">
@@ -128,7 +129,7 @@ Payload: {{request.body}}
 
 1. **克隆或下载本项目到本地**：
    ```bash
-   git clone https://github.com/your-username/chrome-network-copier.git
+   git clone https://github.com/happybang/network_plugin_plus.git
    ```
 
 2. **在 Chrome 中加载扩展**：
@@ -166,8 +167,8 @@ node --test tests/utils.test.js
 ## 🤝 贡献与反馈
 
 如果你有任何建议、新特性构想或遇到了 Bug：
-- 欢迎提交 [Issue](https://github.com/your-username/chrome-network-copier/issues)
-- 欢迎发起 [Pull Request](https://github.com/your-username/chrome-network-copier/pulls)
+- 欢迎提交 [Issue](https://github.com/happybang/network_plugin_plus/issues)
+- 欢迎发起 [Pull Request](https://github.com/happybang/network_plugin_plus/pulls)
 
 **如果你觉得这个小工具帮你节省了时间，请给它点一个 ⭐️ Star 鼓励一下吧！**
 
