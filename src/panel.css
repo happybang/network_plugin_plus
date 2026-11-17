@@ -107,6 +107,7 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .toolbar-separator {
@@ -123,6 +124,7 @@ body {
   font-size: 11px;
   color: var(--text-secondary);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .toolbar-checkbox input {
@@ -141,6 +143,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: background 0.1s, border-color 0.1s;
 }
 
