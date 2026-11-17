@@ -1,0 +1,16 @@
+{
+  "name": "chrome-network-copier",
+  "version": "1.0.0",
+  "description": "Chrome DevTools Network Copier Extension",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/utils.test.js"
+  },
+  "keywords": [
+    "chrome-extension",
+    "devtools",
+    "network"
+  ],
+  "author": "",
+  "license": "MIT"
+}
