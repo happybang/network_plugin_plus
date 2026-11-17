@@ -133,6 +133,13 @@
 
   <!-- Custom Context Menu for Right-Click on Network Requests -->
   <div class="custom-context-menu" id="context-menu">
+    <!-- Template Submenu Group placed first -->
+    <div class="menu-item menu-parent" id="menu-item-templates">
+      <span class="icon">📑</span>
+      <span>模版复制 ▶</span>
+      <div class="context-submenu" id="context-submenu-templates"></div>
+    </div>
+    <div class="menu-separator"></div>
     <div class="menu-item" data-action="copy-curl-clean">
       <span class="icon">📋</span>
       <span>Copy as cURL (Clean)</span>
@@ -166,13 +173,6 @@
     <div class="menu-item" data-action="copy-custom-header">
       <span class="icon">⚙️</span>
       <span>Copy Header: Custom...</span>
-    </div>
-    <div class="menu-separator"></div>
-    <!-- Template Submenu Group -->
-    <div class="menu-item menu-parent" id="menu-item-templates">
-      <span class="icon">📑</span>
-      <span>模版复制 ▶</span>
-      <div class="context-submenu" id="context-submenu-templates"></div>
     </div>
     <div class="menu-separator"></div>
     <div class="menu-item" data-action="view-details">

@@ -231,6 +231,8 @@ function renderTable() {
     const displayName = getUrlDisplayName(req.url);
     const authHeader = getHeader(req.requestHeaders, 'Authorization');
     const cookieHeader = getHeader(req.requestHeaders, 'Cookie');
+    const activeTpl = state.templates.find((t) => t.id === state.activeTemplateId) || state.templates[0];
+    const tplTitle = activeTpl ? `按默认模版复制: ${escapeHtml(activeTpl.name)}` : '按模版复制';
 
     row.innerHTML = `
       <div class="td col-name" title="${escapeHtml(req.url)}">
@@ -246,11 +248,11 @@ function renderTable() {
       <div class="td col-size">${formatSize(req.size)}</div>
       <div class="td col-time">${formatTime(req.time)}</div>
       <div class="td col-actions">
+        <button class="quick-action-btn quick-action-primary" data-action="quick-tpl" title="${tplTitle}">模版</button>
         <button class="quick-action-btn" data-action="quick-curl" title="Copy clean cURL">cURL</button>
         <button class="quick-action-btn" data-action="quick-url" title="Copy URL">URL</button>
         <button class="quick-action-btn" data-action="quick-req" title="Copy Request Body">Req</button>
         <button class="quick-action-btn" data-action="quick-resp" title="Copy Response Body">Resp</button>
-        <button class="quick-action-btn" data-action="quick-tpl" title="Copy using active Template">Tpl</button>
         ${authHeader ? '<button class="quick-action-btn" data-action="quick-auth" title="Copy Auth Token">Auth</button>' : ''}
         ${cookieHeader ? '<button class="quick-action-btn" data-action="quick-cookie" title="Copy Cookie">Cookie</button>' : ''}
       </div>
