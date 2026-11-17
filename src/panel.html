@@ -46,6 +46,13 @@
     </div>
 
     <div class="toolbar-group toolbar-right">
+      <button id="btn-open-templates" class="btn" title="Manage Custom Copy Templates">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>Templates (定制模版)</span>
+      </button>
       <span id="requests-count" class="count-badge">0 requests</span>
     </div>
   </header>
@@ -82,6 +89,7 @@
         <button class="tab-btn active" data-tab="headers">Headers</button>
         <button class="tab-btn" data-tab="payload">Payload</button>
         <button class="tab-btn" data-tab="response">Response</button>
+        <button class="tab-btn" data-tab="template">Template (模版预览)</button>
       </div>
       <div class="drawer-content">
         <!-- Tab: Headers -->
@@ -108,6 +116,16 @@
             <button class="btn btn-sm" id="btn-copy-response">Copy Response Body</button>
           </div>
           <pre class="code-view" id="response-content"></pre>
+        </div>
+
+        <!-- Tab: Template -->
+        <div class="tab-pane" id="pane-template">
+          <div class="pane-actions template-toolbar">
+            <select id="select-active-template" class="template-select"></select>
+            <button class="btn btn-sm" id="btn-copy-rendered-template">Copy Formatted</button>
+            <button class="btn btn-sm" id="btn-edit-current-template">Edit Template</button>
+          </div>
+          <pre class="code-view" id="template-output"></pre>
         </div>
       </div>
     </aside>
@@ -150,9 +168,77 @@
       <span>Copy Header: Custom...</span>
     </div>
     <div class="menu-separator"></div>
+    <!-- Template Submenu Group -->
+    <div class="menu-item menu-parent" id="menu-item-templates">
+      <span class="icon">📑</span>
+      <span>Copy via Template (模版复制) ▶</span>
+      <div class="context-submenu" id="context-submenu-templates"></div>
+    </div>
+    <div class="menu-separator"></div>
     <div class="menu-item" data-action="view-details">
       <span class="icon">🔍</span>
       <span>View Request Details</span>
+    </div>
+  </div>
+
+  <!-- Template Manager Modal -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">自定义复制模版 (Custom Copy Templates)</h3>
+        <button class="btn-close" id="btn-close-modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-sidebar">
+          <div class="sidebar-top">
+            <span class="sidebar-title">我的模版</span>
+            <button class="btn btn-sm" id="btn-new-template">+ 新建</button>
+          </div>
+          <div class="template-list" id="template-list"></div>
+          <button class="btn btn-sm btn-danger" id="btn-reset-templates">恢复默认模版</button>
+        </div>
+
+        <div class="modal-main">
+          <div class="form-row">
+            <label class="form-label" for="tpl-name-input">模版名称:</label>
+            <input type="text" id="tpl-name-input" class="form-input" placeholder="例如：我的专属 API 记录模版">
+          </div>
+
+          <div class="form-row">
+            <div class="label-with-tags">
+              <label class="form-label" for="tpl-content-input">模版内容 (点击标签可快速插入变量):</label>
+              <div class="var-tags" id="var-tags">
+                <span class="var-tag" data-var="{{url}}">{{url}}</span>
+                <span class="var-tag" data-var="{{method}}">{{method}}</span>
+                <span class="var-tag" data-var="{{path}}">{{path}}</span>
+                <span class="var-tag" data-var="{{status}}">{{status}}</span>
+                <span class="var-tag" data-var="{{header.Authorization}}">{{header.Authorization}}</span>
+                <span class="var-tag" data-var="{{header.Cookie}}">{{header.Cookie}}</span>
+                <span class="var-tag" data-var="{{request.body}}">{{request.body}}</span>
+                <span class="var-tag" data-var="{{response.body}}">{{response.body}}</span>
+                <span class="var-tag" data-var="{{curl}}">{{curl}}</span>
+              </div>
+            </div>
+            <textarea id="tpl-content-input" class="form-textarea" rows="8" spellcheck="false" placeholder="在此编写模版..."></textarea>
+          </div>
+
+          <div class="preview-section">
+            <div class="preview-header">
+              <span>实时渲染预览:</span>
+            </div>
+            <pre class="preview-box" id="tpl-live-preview"></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="btn-delete-template">删除此模版</button>
+        <div class="footer-right">
+          <button class="btn" id="btn-cancel-modal">关闭</button>
+          <button class="btn btn-primary" id="btn-save-template">保存模版</button>
+        </div>
+      </div>
     </div>
   </div>
 

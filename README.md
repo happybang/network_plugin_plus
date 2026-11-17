@@ -21,10 +21,37 @@
    - 📤 **Copy Request Body (Plaintext)**：一键复制请求载荷（JSON / 纯文本）；
    - 🏷️ **Copy Header: Authorization**：一键复制 Token / 身份认证头；
    - 🏷️ **Copy Header: Cookie**：一键复制该请求携带的 Cookie；
-   - ⚙️ **Copy Header: Custom...**：输入任意 Header 名称（如 `x-request-id`、`trace-id`）直接提取其值。
+   - ⚙️ **Copy Header: Custom...**：输入任意 Header 名称（如 `x-request-id`、`trace-id`）直接提取其值；
+   - 📑 **Copy via Template (模版复制)**：直接使用你预设的模版生成自定义格式。
 
-3. **行内胶囊快捷按钮（0 次右键，1 击即拷）**：
-   表格右侧直接提供 `[cURL]`、`[URL]`、`[Req]`、`[Resp]`、`[Auth]`、`[Cookie]` 快捷胶囊，鼠标轻点一下即可写入系统剪贴板并弹出浮动提示。
+3. **自由定制复制模版（Custom Template Engine）**：
+   - 点击顶部 **`Templates (定制模版)`** 按钮唤出模版管理器；
+   - 支持新建、修改、删除模版，并提供**实时渲染预览**；
+   - 点击变量胶囊标签（如 `{{url}}`、`{{header.Authorization}}` 等）可一键插入到模版光标处；
+   - 模版自动持久化保存在本地；
+   - 在请求右侧详情抽屉切换到 **`Template (模版预览)`** 标签，可实时下拉切换模版并一键复制。
+
+4. **行内胶囊快捷按钮（0 次右键，1 击即拷）**：
+   表格右侧直接提供 `[cURL]`、`[URL]`、`[Req]`、`[Resp]`、`[Tpl]`、`[Auth]`、`[Cookie]` 快捷胶囊，鼠标轻点一下即可写入系统剪贴板并弹出浮动提示。
+
+---
+
+## 📝 模版变量速查表
+
+| 变量 | 对应内容 | 示例 |
+| :--- | :--- | :--- |
+| `{{url}}` | 完整请求 URL | `https://api.com/v1/user?id=1` |
+| `{{path}}` | 路径 Pathname | `/v1/user` |
+| `{{method}}` | 请求方法 | `POST` / `GET` |
+| `{{status}}` | 状态码 | `200` |
+| `{{time}}` | 耗时 | `48 ms` |
+| `{{size}}` | 资源大小 | `1.4 kB` |
+| `{{request.body}}` | 请求载荷（格式化 JSON） | `{\n  "name": "tom"\n}` |
+| `{{response.body}}` | 响应体（格式化 JSON） | `{\n  "code": 0\n}` |
+| `{{header.HeaderName}}` | 提取任意指定请求头 | `{{header.Authorization}}` |
+| `{{resp.header.HeaderName}}` | 提取任意指定响应头 | `{{resp.header.Content-Type}}` |
+| `{{curl}}` | 精简版 cURL 命令行 | `curl '...' -H '...'` |
+| `{{curl.full}}` | 完整版 cURL 命令行 | 包含所有浏览器噪点头 |
 
 ---
 

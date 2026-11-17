@@ -197,3 +197,106 @@ export function filterRequests(requests, query = '', typeFilter = 'all') {
     return true;
   });
 }
+
+/**
+ * Built-in preset templates
+ */
+export const DEFAULT_TEMPLATES = [
+  {
+    id: 'tpl_bug_report',
+    name: 'Bug 提报格式',
+    content: `【接口】{{method}} {{path}} ({{status}})
+【URL】{{url}}
+【Token】{{header.authorization}}
+【请求入参】:
+{{request.body}}
+【接口返回】:
+{{response.body}}`,
+  },
+  {
+    id: 'tpl_token_url',
+    name: 'URL + Token 排错',
+    content: `URL: {{url}}
+Authorization: {{header.authorization}}
+Cookie: {{header.cookie}}
+Payload: {{request.body}}`,
+  },
+  {
+    id: 'tpl_markdown',
+    name: 'Markdown 文档格式',
+    content: `### 接口: \`{{method}} {{path}}\`
+- **URL**: \`{{url}}\`
+- **状态**: \`{{status}}\`
+- **Token**: \`{{header.authorization}}\`
+
+\`\`\`json
+// Request Body
+{{request.body}}
+\`\`\`
+
+\`\`\`json
+// Response Body
+{{response.body}}
+\`\`\``,
+  },
+];
+
+/**
+ * Renders a customizable string template with dynamic request data.
+ * Supports:
+ * - {{url}}, {{path}}, {{method}}, {{status}}, {{statusText}}, {{time}}, {{size}}
+ * - {{curl}}, {{curl.full}}
+ * - {{request.body}}, {{request.body.raw}}, {{response.body}}, {{response.body.raw}}
+ * - {{header.<Header-Name>}}, {{resp.header.<Header-Name>}}
+ */
+export function renderTemplate(templateStr, data = {}) {
+  if (typeof templateStr !== 'string') return '';
+
+  return templateStr.replace(/\{\{\s*([\w.-]+)\s*\}\}/g, (match, key) => {
+    const lowerKey = key.toLowerCase();
+
+    if (lowerKey === 'url') return data.url || '';
+    if (lowerKey === 'path') return data.path || '';
+    if (lowerKey === 'method') return data.method || '';
+    if (lowerKey === 'status') return data.status !== undefined ? String(data.status) : '';
+    if (lowerKey === 'statustext') return data.statusText || '';
+    if (lowerKey === 'time') return data.time || '';
+    if (lowerKey === 'size') return data.size || '';
+    if (lowerKey === 'curl') return data.curl || '';
+    if (lowerKey === 'curl.full') return data.curlFull || '';
+
+    if (lowerKey === 'request.body' || lowerKey === 'req.body' || lowerKey === 'payload') {
+      return data.requestBody || '';
+    }
+    if (lowerKey === 'request.body.raw' || lowerKey === 'req.body.raw') {
+      return data.requestBodyRaw || '';
+    }
+
+    if (lowerKey === 'response.body' || lowerKey === 'resp.body' || lowerKey === 'response') {
+      return data.responseBody || '';
+    }
+    if (lowerKey === 'response.body.raw' || lowerKey === 'resp.body.raw') {
+      return data.responseBodyRaw || '';
+    }
+
+    // Request Headers: {{header.<name>}}, {{headers.<name>}}, {{req.header.<name>}}
+    if (
+      lowerKey.startsWith('header.') ||
+      lowerKey.startsWith('headers.') ||
+      lowerKey.startsWith('req.header.')
+    ) {
+      const parts = key.split('.');
+      const headerName = parts.slice(lowerKey.startsWith('req.header.') ? 2 : 1).join('.');
+      return getHeader(data.requestHeaders, headerName);
+    }
+
+    // Response Headers: {{resp.header.<name>}}, {{resp.headers.<name>}}
+    if (lowerKey.startsWith('resp.header.') || lowerKey.startsWith('resp.headers.')) {
+      const headerName = key.split('.').slice(2).join('.');
+      return getHeader(data.responseHeaders, headerName);
+    }
+
+    return match;
+  });
+}
+

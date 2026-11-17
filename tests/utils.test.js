@@ -9,6 +9,8 @@ import {
   formatTime,
   filterRequests,
   classifyResourceType,
+  renderTemplate,
+  DEFAULT_TEMPLATES,
 } from '../src/utils.js';
 
 describe('Network Copier Utils', () => {
@@ -179,6 +181,66 @@ describe('Network Copier Utils', () => {
       const res3 = filterRequests(items, 'users', 'fetch');
       assert.equal(res3.length, 1);
       assert.equal(res3[0].url, 'https://api.com/v1/users');
+    });
+  });
+
+  describe('renderTemplate', () => {
+    const context = {
+      url: 'https://api.example.com/v1/users/info?id=123',
+      path: '/v1/users/info',
+      method: 'POST',
+      status: 200,
+      statusText: 'OK',
+      time: '45 ms',
+      size: '1.2 kB',
+      curl: "curl 'https://api.example.com/v1/users/info?id=123'",
+      curlFull: "curl 'https://api.example.com/v1/users/info?id=123' -H 'sec-ch-ua: none'",
+      requestBody: '{\n  "role": "admin"\n}',
+      requestBodyRaw: '{"role":"admin"}',
+      responseBody: '{\n  "code": 0\n}',
+      responseBodyRaw: '{"code":0}',
+      requestHeaders: [
+        { name: 'Authorization', value: 'Bearer mock_token_123' },
+        { name: 'Cookie', value: 'sid=abc' },
+      ],
+      responseHeaders: [
+        { name: 'Content-Type', value: 'application/json' },
+      ],
+    };
+
+    it('replaces basic variables like url, method, path, status', () => {
+      const template = '{{method}} {{path}} ({{status}}) -> {{url}}';
+      const result = renderTemplate(template, context);
+      assert.equal(result, 'POST /v1/users/info (200) -> https://api.example.com/v1/users/info?id=123');
+    });
+
+    it('replaces request and response body variables', () => {
+      const template = 'REQ: {{request.body}} | RESP: {{response.body}}';
+      const result = renderTemplate(template, context);
+      assert.equal(result, 'REQ: {\n  "role": "admin"\n} | RESP: {\n  "code": 0\n}');
+    });
+
+    it('extracts request headers dynamically with {{header.<Name>}}', () => {
+      const template = 'Token: {{header.authorization}} | Cookie: {{header.Cookie}}';
+      const result = renderTemplate(template, context);
+      assert.equal(result, 'Token: Bearer mock_token_123 | Cookie: sid=abc');
+    });
+
+    it('extracts response headers dynamically with {{resp.header.<Name>}}', () => {
+      const template = 'Type: {{resp.header.content-type}}';
+      const result = renderTemplate(template, context);
+      assert.equal(result, 'Type: application/json');
+    });
+
+    it('renders default preset templates without errors', () => {
+      assert(Array.isArray(DEFAULT_TEMPLATES));
+      assert(DEFAULT_TEMPLATES.length >= 2);
+      for (const tpl of DEFAULT_TEMPLATES) {
+        const output = renderTemplate(tpl.content, context);
+        assert(typeof output === 'string');
+        assert(output.length > 0);
+        assert(!output.includes('{{method}}'));
+      }
     });
   });
 });
