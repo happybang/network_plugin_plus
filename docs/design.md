@@ -18,22 +18,34 @@ A Chrome DevTools Extension providing a near-native Network inspection experienc
 
 ```
 chrome-network-copier/
-├── manifest.json            # Manifest V3 configuration
+├── manifest.json            # Manifest V3 configuration (with default_locale)
+├── _locales/                # Chrome i18n locales (10 languages)
 ├── src/
 │   ├── devtools.html        # Entry point for DevTools page
 │   ├── devtools.js          # Creates DevTools panel ("Network+")
 │   ├── panel.html           # Main UI for the custom Network panel
 │   ├── panel.css            # DevTools-authentic dark/light styling
 │   ├── panel.js             # Panel controller & event binding
-│   └── utils.js             # Pure logic: cURL generator, header/body extractors
+│   └── utils.js             # Pure logic: cURL generator, header/body extractors, templates
 ├── tests/
 │   └── utils.test.js        # Unit tests using Node.js built-in test runner
 ├── icons/
 │   ├── icon16.png
 │   ├── icon48.png
 │   └── icon128.png
+├── store-assets/            # Official Chrome Web Store graphics & generator
+│   ├── screenshot-1.png     # 1280x800 Screenshot 1
+│   ├── screenshot-2.png     # 1280x800 Screenshot 2
+│   ├── screenshot-3.png     # 1280x800 Screenshot 3
+│   ├── promo-tile-440x280.png
+│   └── screenshot-generator.html
+├── scripts/
+│   ├── build_zip.py         # Store ZIP packaging script
+│   └── generate_screenshots.py # Headless Chrome screenshot renderer
 ├── docs/
-│   └── design.md
+│   ├── design.md
+│   ├── STORE_PUBLISHING_GUIDE.md
+│   └── STORE_LISTING_DESCRIPTION.md
 └── README.md                # Quick installation and usage guide
 ```
 

@@ -843,6 +843,125 @@ body {
 }
 
 /* --------------------------------------------------------------------------
+   Quick Buttons Configuration Modal
+   -------------------------------------------------------------------------- */
+.btn-config-gear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 1px 3px;
+  margin-left: 4px;
+  opacity: 0.7;
+  transition: opacity 0.1s;
+  vertical-align: middle;
+}
+
+.btn-config-gear:hover {
+  opacity: 1;
+}
+
+.modal-dialog-medium {
+  width: 620px;
+  max-width: 90vw;
+  height: 520px;
+}
+
+.modal-body-single {
+  flex-direction: column;
+  padding: 16px;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.modal-intro {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.button-config-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px;
+}
+
+.btn-config-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.btn-config-row.disabled {
+  opacity: 0.55;
+}
+
+.btn-config-type {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--pill-bg);
+  color: var(--text-secondary);
+  border-radius: 3px;
+  min-width: 70px;
+  text-align: center;
+}
+
+.btn-config-label-input {
+  width: 80px;
+  font-size: 11px;
+  padding: 3px 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.btn-config-detail {
+  flex: 1;
+  font-size: 11px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-config-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-icon-mini {
+  padding: 2px 5px;
+  font-size: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-icon-mini:hover {
+  background: var(--bg-hover);
+}
+
+.button-config-add-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* --------------------------------------------------------------------------
    Toast Notification
    -------------------------------------------------------------------------- */
 .toast {

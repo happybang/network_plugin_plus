@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Network+ (Custom Network Copier)",
+    "description": "Translation for extName"
+  },
+  "extDescription": {
+    "message": "Chrome DevTools Network panel with 1-click & custom right-click copy for clean cURL, response, request payload, and headers.",
+    "description": "Translation for extDescription"
+  },
+  "btnClear": {
+    "message": "Clear",
+    "description": "Translation for btnClear"
+  },
+  "chkPreserve": {
+    "message": "Preserve log",
+    "description": "Translation for chkPreserve"
+  },
+  "filterPlaceholder": {
+    "message": "Filter (URL, path, method...)",
+    "description": "Translation for filterPlaceholder"
+  },
+  "btnTemplates": {
+    "message": "Templates",
+    "description": "Translation for btnTemplates"
+  },
+  "colName": {
+    "message": "Name",
+    "description": "Translation for colName"
+  },
+  "colStatus": {
+    "message": "Status",
+    "description": "Translation for colStatus"
+  },
+  "colMethod": {
+    "message": "Method",
+    "description": "Translation for colMethod"
+  },
+  "colType": {
+    "message": "Type",
+    "description": "Translation for colType"
+  },
+  "colSize": {
+    "message": "Size",
+    "description": "Translation for colSize"
+  },
+  "colTime": {
+    "message": "Time",
+    "description": "Translation for colTime"
+  },
+  "colActions": {
+    "message": "Quick Copy",
+    "description": "Translation for colActions"
+  },
+  "emptyRecording": {
+    "message": "Recording network activity...",
+    "description": "Translation for emptyRecording"
+  },
+  "emptyHint": {
+    "message": "Perform actions in the inspected page to view requests.",
+    "description": "Translation for emptyHint"
+  },
+  "drawerTitle": {
+    "message": "Request Details",
+    "description": "Translation for drawerTitle"
+  },
+  "tabHeaders": {
+    "message": "Headers",
+    "description": "Translation for tabHeaders"
+  },
+  "tabPayload": {
+    "message": "Payload",
+    "description": "Translation for tabPayload"
+  },
+  "tabResponse": {
+    "message": "Response",
+    "description": "Translation for tabResponse"
+  },
+  "tabTemplate": {
+    "message": "Template",
+    "description": "Translation for tabTemplate"
+  },
+  "btnConfigButtons": {
+    "message": "Configure Buttons",
+    "description": "Translation for btnConfigButtons"
+  },
+  "configModalTitle": {
+    "message": "Configure Quick Copy Buttons",
+    "description": "Translation for configModalTitle"
+  },
+  "configAddHeaderBtn": {
+    "message": "+ Add Header Button",
+    "description": "Translation for configAddHeaderBtn"
+  },
+  "configAddTemplateBtn": {
+    "message": "+ Add Template Button",
+    "description": "Translation for configAddTemplateBtn"
+  },
+  "modalSave": {
+    "message": "Save",
+    "description": "Translation for modalSave"
+  },
+  "modalClose": {
+    "message": "Close",
+    "description": "Translation for modalClose"
+  },
+  "modalResetDefaults": {
+    "message": "Reset to Defaults",
+    "description": "Translation for modalResetDefaults"
+  }
+}

@@ -5,7 +5,8 @@
   "type": "module",
   "main": "src/panel.js",
   "scripts": {
-    "test": "node --test tests/utils.test.js"
+    "test": "node --test tests/utils.test.js",
+    "build:zip": "python3 scripts/build_zip.py"
   },
   "repository": {
     "type": "git",

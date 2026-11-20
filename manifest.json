@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Network+ (Custom Network Copier)",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "High-fidelity Chrome DevTools Network panel with 1-click & custom right-click copy for cURL, Response, Request body, and specific Headers.",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "devtools_page": "src/devtools.html",
   "icons": {
     "16": "icons/icon16.png",

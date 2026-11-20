@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Network+ (Copieur de Réseau & Exportateur de Modèles)",
+    "description": "Translation for extName"
+  },
+  "extDescription": {
+    "message": "Panneau DevTools avec copie en 1 clic et menu contextuel pour cURL propre, réponse, payload et en-têtes.",
+    "description": "Translation for extDescription"
+  },
+  "btnClear": {
+    "message": "Effacer",
+    "description": "Translation for btnClear"
+  },
+  "chkPreserve": {
+    "message": "Conserver le journal",
+    "description": "Translation for chkPreserve"
+  },
+  "filterPlaceholder": {
+    "message": "Filtrer (URL, chemin, méthode...)",
+    "description": "Translation for filterPlaceholder"
+  },
+  "btnTemplates": {
+    "message": "Modèles",
+    "description": "Translation for btnTemplates"
+  },
+  "colName": {
+    "message": "Nom",
+    "description": "Translation for colName"
+  },
+  "colStatus": {
+    "message": "Statut",
+    "description": "Translation for colStatus"
+  },
+  "colMethod": {
+    "message": "Méthode",
+    "description": "Translation for colMethod"
+  },
+  "colType": {
+    "message": "Type",
+    "description": "Translation for colType"
+  },
+  "colSize": {
+    "message": "Taille",
+    "description": "Translation for colSize"
+  },
+  "colTime": {
+    "message": "Temps",
+    "description": "Translation for colTime"
+  },
+  "colActions": {
+    "message": "Copie rapide",
+    "description": "Translation for colActions"
+  },
+  "emptyRecording": {
+    "message": "Enregistrement de l'activité réseau...",
+    "description": "Translation for emptyRecording"
+  },
+  "emptyHint": {
+    "message": "Effectuez des actions sur la page inspectée pour voir les requêtes.",
+    "description": "Translation for emptyHint"
+  },
+  "drawerTitle": {
+    "message": "Détails de la requête",
+    "description": "Translation for drawerTitle"
+  },
+  "tabHeaders": {
+    "message": "En-têtes",
+    "description": "Translation for tabHeaders"
+  },
+  "tabPayload": {
+    "message": "Payload",
+    "description": "Translation for tabPayload"
+  },
+  "tabResponse": {
+    "message": "Réponse",
+    "description": "Translation for tabResponse"
+  },
+  "tabTemplate": {
+    "message": "Modèle",
+    "description": "Translation for tabTemplate"
+  },
+  "btnConfigButtons": {
+    "message": "Configurer les boutons",
+    "description": "Translation for btnConfigButtons"
+  },
+  "configModalTitle": {
+    "message": "Personnaliser les boutons de copie rapide",
+    "description": "Translation for configModalTitle"
+  },
+  "configAddHeaderBtn": {
+    "message": "+ Ajouter un bouton d'en-tête",
+    "description": "Translation for configAddHeaderBtn"
+  },
+  "configAddTemplateBtn": {
+    "message": "+ Ajouter un bouton de modèle",
+    "description": "Translation for configAddTemplateBtn"
+  },
+  "modalSave": {
+    "message": "Enregistrer",
+    "description": "Translation for modalSave"
+  },
+  "modalClose": {
+    "message": "Fermer",
+    "description": "Translation for modalClose"
+  },
+  "modalResetDefaults": {
+    "message": "Rétablir par défaut",
+    "description": "Translation for modalResetDefaults"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Network+ (Netzwerk-Kopierer & Vorlagen-Exporteur)",
+    "description": "Translation for extName"
+  },
+  "extDescription": {
+    "message": "DevTools-Panel mit 1-Klick- und Kontextmenü-Kopie für saubere cURL, Antworten, Nutzlasten und Header.",
+    "description": "Translation for extDescription"
+  },
+  "btnClear": {
+    "message": "Löschen",
+    "description": "Translation for btnClear"
+  },
+  "chkPreserve": {
+    "message": "Protokoll behalten",
+    "description": "Translation for chkPreserve"
+  },
+  "filterPlaceholder": {
+    "message": "Filtern (URL, Pfad, Methode...)",
+    "description": "Translation for filterPlaceholder"
+  },
+  "btnTemplates": {
+    "message": "Vorlagen",
+    "description": "Translation for btnTemplates"
+  },
+  "colName": {
+    "message": "Name",
+    "description": "Translation for colName"
+  },
+  "colStatus": {
+    "message": "Status",
+    "description": "Translation for colStatus"
+  },
+  "colMethod": {
+    "message": "Methode",
+    "description": "Translation for colMethod"
+  },
+  "colType": {
+    "message": "Typ",
+    "description": "Translation for colType"
+  },
+  "colSize": {
+    "message": "Größe",
+    "description": "Translation for colSize"
+  },
+  "colTime": {
+    "message": "Zeit",
+    "description": "Translation for colTime"
+  },
+  "colActions": {
+    "message": "Schnellkopie",
+    "description": "Translation for colActions"
+  },
+  "emptyRecording": {
+    "message": "Netzwerkaktivität wird aufgezeichnet...",
+    "description": "Translation for emptyRecording"
+  },
+  "emptyHint": {
+    "message": "Führen Sie Aktionen auf der Seite aus, um Anfragen anzuzeigen.",
+    "description": "Translation for emptyHint"
+  },
+  "drawerTitle": {
+    "message": "Anfragedetails",
+    "description": "Translation for drawerTitle"
+  },
+  "tabHeaders": {
+    "message": "Header",
+    "description": "Translation for tabHeaders"
+  },
+  "tabPayload": {
+    "message": "Nutzlast",
+    "description": "Translation for tabPayload"
+  },
+  "tabResponse": {
+    "message": "Antwort",
+    "description": "Translation for tabResponse"
+  },
+  "tabTemplate": {
+    "message": "Vorlage",
+    "description": "Translation for tabTemplate"
+  },
+  "btnConfigButtons": {
+    "message": "Schaltflächen anpassen",
+    "description": "Translation for btnConfigButtons"
+  },
+  "configModalTitle": {
+    "message": "Schnellkopier-Schaltflächen anpassen",
+    "description": "Translation for configModalTitle"
+  },
+  "configAddHeaderBtn": {
+    "message": "+ Header-Schaltfläche hinzufügen",
+    "description": "Translation for configAddHeaderBtn"
+  },
+  "configAddTemplateBtn": {
+    "message": "+ Vorlagen-Schaltfläche hinzufügen",
+    "description": "Translation for configAddTemplateBtn"
+  },
+  "modalSave": {
+    "message": "Speichern",
+    "description": "Translation for modalSave"
+  },
+  "modalClose": {
+    "message": "Schließen",
+    "description": "Translation for modalClose"
+  },
+  "modalResetDefaults": {
+    "message": "Auf Standard zurücksetzen",
+    "description": "Translation for modalResetDefaults"
+  }
+}

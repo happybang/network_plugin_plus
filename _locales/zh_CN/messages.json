@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Network+ (网络请求快速复制与模版导出)",
+    "description": "Translation for extName"
+  },
+  "extDescription": {
+    "message": "专为开发者打造的 DevTools 网络抓包增强面板：一键复制纯净 cURL、提取 Token、按自定义模版导出接口数据。",
+    "description": "Translation for extDescription"
+  },
+  "btnClear": {
+    "message": "清空",
+    "description": "Translation for btnClear"
+  },
+  "chkPreserve": {
+    "message": "保留日志",
+    "description": "Translation for chkPreserve"
+  },
+  "filterPlaceholder": {
+    "message": "过滤 (URL, 路径, 请求方法...)",
+    "description": "Translation for filterPlaceholder"
+  },
+  "btnTemplates": {
+    "message": "模版",
+    "description": "Translation for btnTemplates"
+  },
+  "colName": {
+    "message": "名称",
+    "description": "Translation for colName"
+  },
+  "colStatus": {
+    "message": "状态",
+    "description": "Translation for colStatus"
+  },
+  "colMethod": {
+    "message": "方法",
+    "description": "Translation for colMethod"
+  },
+  "colType": {
+    "message": "类型",
+    "description": "Translation for colType"
+  },
+  "colSize": {
+    "message": "大小",
+    "description": "Translation for colSize"
+  },
+  "colTime": {
+    "message": "时间",
+    "description": "Translation for colTime"
+  },
+  "colActions": {
+    "message": "快捷复制",
+    "description": "Translation for colActions"
+  },
+  "emptyRecording": {
+    "message": "正在记录网络请求...",
+    "description": "Translation for emptyRecording"
+  },
+  "emptyHint": {
+    "message": "在检查的页面中进行操作即可查看请求。",
+    "description": "Translation for emptyHint"
+  },
+  "drawerTitle": {
+    "message": "请求详情",
+    "description": "Translation for drawerTitle"
+  },
+  "tabHeaders": {
+    "message": "标头",
+    "description": "Translation for tabHeaders"
+  },
+  "tabPayload": {
+    "message": "载荷",
+    "description": "Translation for tabPayload"
+  },
+  "tabResponse": {
+    "message": "响应",
+    "description": "Translation for tabResponse"
+  },
+  "tabTemplate": {
+    "message": "模版",
+    "description": "Translation for tabTemplate"
+  },
+  "btnConfigButtons": {
+    "message": "配置按钮",
+    "description": "Translation for btnConfigButtons"
+  },
+  "configModalTitle": {
+    "message": "自定义快捷复制按钮",
+    "description": "Translation for configModalTitle"
+  },
+  "configAddHeaderBtn": {
+    "message": "+ 新增 Header 按钮",
+    "description": "Translation for configAddHeaderBtn"
+  },
+  "configAddTemplateBtn": {
+    "message": "+ 新增模版按钮",
+    "description": "Translation for configAddTemplateBtn"
+  },
+  "modalSave": {
+    "message": "保存",
+    "description": "Translation for modalSave"
+  },
+  "modalClose": {
+    "message": "关闭",
+    "description": "Translation for modalClose"
+  },
+  "modalResetDefaults": {
+    "message": "恢复默认",
+    "description": "Translation for modalResetDefaults"
+  }
+}

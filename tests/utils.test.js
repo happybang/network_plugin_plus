@@ -11,6 +11,8 @@ import {
   classifyResourceType,
   renderTemplate,
   DEFAULT_TEMPLATES,
+  DEFAULT_QUICK_BUTTONS,
+  resolveQuickButtonAction,
 } from '../src/utils.js';
 
 describe('Network Copier Utils', () => {
@@ -241,6 +243,44 @@ describe('Network Copier Utils', () => {
         assert(output.length > 0);
         assert(!output.includes('{{method}}'));
       }
+    });
+  });
+
+  describe('resolveQuickButtonAction and DEFAULT_QUICK_BUTTONS', () => {
+    it('has standard default buttons', () => {
+      assert(Array.isArray(DEFAULT_QUICK_BUTTONS));
+      assert(DEFAULT_QUICK_BUTTONS.length >= 5);
+      assert.equal(DEFAULT_QUICK_BUTTONS[0].type, 'template');
+    });
+
+    it('resolves cURL, URL, Req, and Header actions accurately', () => {
+      const btnCurl = { type: 'curl_clean', label: 'cURL', enabled: true };
+      const resCurl = resolveQuickButtonAction(btnCurl, sampleRequest);
+      assert.equal(resCurl.shouldHide, false);
+      assert.match(resCurl.textToCopy, /^curl /);
+
+      const btnUrl = { type: 'url', label: 'URL', enabled: true };
+      const resUrl = resolveQuickButtonAction(btnUrl, sampleRequest);
+      assert.equal(resUrl.textToCopy, sampleRequest.url);
+
+      const btnReq = { type: 'req_body', label: 'Req', enabled: true };
+      const resReq = resolveQuickButtonAction(btnReq, sampleRequest);
+      assert.match(resReq.textToCopy, /john_doe/);
+
+      const btnAuth = { type: 'header', targetHeader: 'Authorization', label: 'Auth', enabled: true, hideIfMissing: true };
+      const resAuth = resolveQuickButtonAction(btnAuth, sampleRequest);
+      assert.equal(resAuth.shouldHide, false);
+      assert.match(resAuth.textToCopy, /Bearer /);
+
+      const btnMissing = { type: 'header', targetHeader: 'X-Non-Existent', label: 'X', enabled: true, hideIfMissing: true };
+      const resMissing = resolveQuickButtonAction(btnMissing, sampleRequest);
+      assert.equal(resMissing.shouldHide, true);
+    });
+
+    it('hides disabled buttons', () => {
+      const btnDisabled = { type: 'url', label: 'URL', enabled: false };
+      const res = resolveQuickButtonAction(btnDisabled, sampleRequest);
+      assert.equal(res.shouldHide, true);
     });
   });
 });

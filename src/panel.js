@@ -9,6 +9,8 @@ import {
   classifyResourceType,
   renderTemplate,
   DEFAULT_TEMPLATES,
+  DEFAULT_QUICK_BUTTONS,
+  resolveQuickButtonAction,
 } from './utils.js';
 
 // Application State
@@ -22,6 +24,7 @@ const state = {
   templates: loadTemplates(),
   activeTemplateId: null,
   editingTemplateId: null,
+  quickButtons: loadQuickButtons(),
 };
 
 // Set initial active template
@@ -55,6 +58,35 @@ function saveTemplates() {
     localStorage.setItem('network_copier_templates', JSON.stringify(state.templates));
   } catch (e) {
     console.error('Failed to save templates to localStorage:', e);
+  }
+}
+
+/**
+ * Load quick buttons from localStorage or fallback to DEFAULT_QUICK_BUTTONS
+ */
+function loadQuickButtons() {
+  try {
+    const raw = localStorage.getItem('network_copier_quick_buttons');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.error('Failed to load quick buttons from localStorage:', e);
+  }
+  return JSON.parse(JSON.stringify(DEFAULT_QUICK_BUTTONS));
+}
+
+/**
+ * Save quick buttons to localStorage
+ */
+function saveQuickButtons() {
+  try {
+    localStorage.setItem('network_copier_quick_buttons', JSON.stringify(state.quickButtons));
+  } catch (e) {
+    console.error('Failed to save quick buttons to localStorage:', e);
   }
 }
 
@@ -103,6 +135,16 @@ const el = {
   btnDeleteTemplate: document.getElementById('btn-delete-template'),
   btnResetTemplates: document.getElementById('btn-reset-templates'),
   varTags: document.getElementById('var-tags'),
+  // Buttons Config Modal Elements
+  btnConfigButtons: document.getElementById('btn-config-buttons'),
+  modalButtonsBackdrop: document.getElementById('modal-buttons-backdrop'),
+  btnCloseButtonsModal: document.getElementById('btn-close-buttons-modal'),
+  btnCancelButtonsModal: document.getElementById('btn-cancel-buttons-modal'),
+  buttonConfigList: document.getElementById('button-config-list'),
+  btnAddHeaderBtn: document.getElementById('btn-add-header-btn'),
+  btnAddTemplateBtn: document.getElementById('btn-add-template-btn'),
+  btnResetButtons: document.getElementById('btn-reset-buttons'),
+  btnSaveButtons: document.getElementById('btn-save-buttons'),
 };
 
 let toastTimer = null;
@@ -231,8 +273,13 @@ function renderTable() {
     const displayName = getUrlDisplayName(req.url);
     const authHeader = getHeader(req.requestHeaders, 'Authorization');
     const cookieHeader = getHeader(req.requestHeaders, 'Cookie');
-    const activeTpl = state.templates.find((t) => t.id === state.activeTemplateId) || state.templates[0];
-    const tplTitle = activeTpl ? `Copy via default template: ${escapeHtml(activeTpl.name)}` : 'Copy via template';
+    let actionsHtml = '';
+    for (const btn of state.quickButtons) {
+      const res = resolveQuickButtonAction(btn, req, state.templates, req._cachedResponse);
+      if (!res.shouldHide) {
+        actionsHtml += `<button class="quick-action-btn ${btn.isPrimary ? 'quick-action-primary' : ''}" data-btn-id="${escapeHtml(btn.id)}" title="${escapeHtml(res.toastLabel)}">${escapeHtml(btn.label)}</button>`;
+      }
+    }
 
     row.innerHTML = `
       <div class="td col-name" title="${escapeHtml(req.url)}">
@@ -248,19 +295,18 @@ function renderTable() {
       <div class="td col-size">${formatSize(req.size)}</div>
       <div class="td col-time">${formatTime(req.time)}</div>
       <div class="td col-actions">
-        <button class="quick-action-btn quick-action-primary" data-action="quick-tpl" title="${tplTitle}">Tpl</button>
-        <button class="quick-action-btn" data-action="quick-curl" title="Copy clean cURL">cURL</button>
-        <button class="quick-action-btn" data-action="quick-url" title="Copy URL">URL</button>
-        <button class="quick-action-btn" data-action="quick-req" title="Copy Request Body">Req</button>
-        <button class="quick-action-btn" data-action="quick-resp" title="Copy Response Body">Resp</button>
-        ${authHeader ? '<button class="quick-action-btn" data-action="quick-auth" title="Copy Auth Token">Auth</button>' : ''}
-        ${cookieHeader ? '<button class="quick-action-btn" data-action="quick-cookie" title="Copy Cookie">Cookie</button>' : ''}
+        ${actionsHtml}
       </div>
     `;
 
     row.addEventListener('click', (e) => {
-      if (e.target.closest('.quick-action-btn')) {
-        handleQuickAction(e.target.dataset.action, req);
+      const btnEl = e.target.closest('.quick-action-btn');
+      if (btnEl) {
+        const btnId = btnEl.dataset.btnId;
+        const btn = state.quickButtons.find((b) => b.id === btnId);
+        if (btn) {
+          executeQuickButton(btn, req);
+        }
         return;
       }
       selectRequest(req.id);
@@ -283,61 +329,17 @@ function escapeHtml(str) {
 }
 
 /**
- * Handle inline quick copy button actions
+ * Handle dynamic quick button execution
  */
-function handleQuickAction(action, req) {
-  switch (action) {
-    case 'quick-curl': {
-      const curl = generateCurl(
-        {
-          method: req.method,
-          url: req.url,
-          headers: req.requestHeaders,
-          postData: req.postData,
-        },
-        { clean: true }
-      );
-      copyToClipboard(curl, 'Copied clean cURL!');
-      break;
-    }
-    case 'quick-url': {
-      copyToClipboard(req.url, 'Copied URL!');
-      break;
-    }
-    case 'quick-req': {
-      const body = formatBody(req.postData?.text || '');
-      copyToClipboard(body, 'Copied Request Body!');
-      break;
-    }
-    case 'quick-resp': {
-      fetchResponseBody(req, (content) => {
-        copyToClipboard(formatBody(content), 'Copied Response Body!');
-      });
-      break;
-    }
-    case 'quick-tpl': {
-      const activeTpl = state.templates.find((t) => t.id === state.activeTemplateId) || state.templates[0];
-      if (!activeTpl) {
-        showToast('No template configured');
-        return;
-      }
-      fetchResponseBody(req, (content) => {
-        const ctx = buildRequestContext(req, content);
-        const output = renderTemplate(activeTpl.content, ctx);
-        copyToClipboard(output, `Copied via template: ${activeTpl.name}!`);
-      });
-      break;
-    }
-    case 'quick-auth': {
-      const auth = getHeader(req.requestHeaders, 'Authorization');
-      copyToClipboard(auth, 'Copied Authorization header!');
-      break;
-    }
-    case 'quick-cookie': {
-      const cookie = getHeader(req.requestHeaders, 'Cookie');
-      copyToClipboard(cookie, 'Copied Cookie header!');
-      break;
-    }
+function executeQuickButton(btn, req) {
+  if (btn.type === 'resp_body' || btn.type === 'template') {
+    fetchResponseBody(req, (content) => {
+      const res = resolveQuickButtonAction(btn, req, state.templates, content);
+      copyToClipboard(res.textToCopy, res.toastLabel);
+    });
+  } else {
+    const res = resolveQuickButtonAction(btn, req, state.templates, req._cachedResponse);
+    copyToClipboard(res.textToCopy, res.toastLabel);
   }
 }
 
@@ -826,6 +828,183 @@ el.btnResetTemplates.addEventListener('click', () => {
 el.btnOpenTemplates.addEventListener('click', () => openTemplateManager());
 el.btnCloseModal.addEventListener('click', closeTemplateManager);
 el.btnCancelModal.addEventListener('click', closeTemplateManager);
+
+/* ==========================================================================
+   Quick Buttons Configuration Modal Controller
+   ========================================================================== */
+function openButtonsConfigModal() {
+  el.modalButtonsBackdrop.classList.add('open');
+  renderButtonConfigList();
+}
+
+function closeButtonsConfigModal() {
+  el.modalButtonsBackdrop.classList.remove('open');
+}
+
+function renderButtonConfigList() {
+  el.buttonConfigList.innerHTML = '';
+  state.quickButtons.forEach((btn, index) => {
+    const row = document.createElement('div');
+    row.className = `btn-config-row ${btn.enabled ? '' : 'disabled'}`;
+
+    let detailHtml = '';
+    if (btn.type === 'header') {
+      detailHtml = `<input type="text" class="btn-config-label-input btn-header-name" value="${escapeHtml(btn.targetHeader || '')}" placeholder="Header Name" style="width:120px;">`;
+    } else if (btn.type === 'template') {
+      let options = `<option value="default"${btn.targetId === 'default' ? ' selected' : ''}>Active / Default Template</option>`;
+      state.templates.forEach((t) => {
+        options += `<option value="${escapeHtml(t.id)}"${btn.targetId === t.id ? ' selected' : ''}>${escapeHtml(t.name)}</option>`;
+      });
+      detailHtml = `<select class="btn-config-select btn-template-target" style="font-size:11px;">${options}</select>`;
+    } else {
+      detailHtml = `<span class="btn-config-detail">${escapeHtml(btn.type)}</span>`;
+    }
+
+    row.innerHTML = `
+      <input type="checkbox" class="btn-enable-chk" ${btn.enabled ? 'checked' : ''} title="Show or hide button">
+      <span class="btn-config-type">${escapeHtml(btn.type)}</span>
+      <input type="text" class="btn-config-label-input btn-label-val" value="${escapeHtml(btn.label || '')}" title="Button display text">
+      ${detailHtml}
+      <div class="btn-config-actions">
+        <button class="btn-icon-mini btn-move-up" title="Move Up" ${index === 0 ? 'disabled' : ''}>▲</button>
+        <button class="btn-icon-mini btn-move-down" title="Move Down" ${index === state.quickButtons.length - 1 ? 'disabled' : ''}>▼</button>
+        ${btn.id.startsWith('btn_custom_') ? '<button class="btn-icon-mini btn-del-btn" title="Delete">✕</button>' : ''}
+      </div>
+    `;
+
+    // Bind row controls
+    const chk = row.querySelector('.btn-enable-chk');
+    chk.addEventListener('change', () => {
+      btn.enabled = chk.checked;
+      row.classList.toggle('disabled', !chk.checked);
+    });
+
+    const labelInput = row.querySelector('.btn-label-val');
+    labelInput.addEventListener('input', () => {
+      btn.label = labelInput.value.trim() || btn.label;
+    });
+
+    const headerNameInput = row.querySelector('.btn-header-name');
+    if (headerNameInput) {
+      headerNameInput.addEventListener('input', () => {
+        btn.targetHeader = headerNameInput.value.trim();
+      });
+    }
+
+    const tplSelect = row.querySelector('.btn-template-target');
+    if (tplSelect) {
+      tplSelect.addEventListener('change', () => {
+        btn.targetId = tplSelect.value;
+      });
+    }
+
+    const upBtn = row.querySelector('.btn-move-up');
+    if (upBtn) {
+      upBtn.addEventListener('click', () => {
+        if (index > 0) {
+          const temp = state.quickButtons[index - 1];
+          state.quickButtons[index - 1] = btn;
+          state.quickButtons[index] = temp;
+          renderButtonConfigList();
+        }
+      });
+    }
+
+    const downBtn = row.querySelector('.btn-move-down');
+    if (downBtn) {
+      downBtn.addEventListener('click', () => {
+        if (index < state.quickButtons.length - 1) {
+          const temp = state.quickButtons[index + 1];
+          state.quickButtons[index + 1] = btn;
+          state.quickButtons[index] = temp;
+          renderButtonConfigList();
+        }
+      });
+    }
+
+    const delBtn = row.querySelector('.btn-del-btn');
+    if (delBtn) {
+      delBtn.addEventListener('click', () => {
+        state.quickButtons.splice(index, 1);
+        renderButtonConfigList();
+      });
+    }
+
+    el.buttonConfigList.appendChild(row);
+  });
+}
+
+el.btnConfigButtons.addEventListener('click', openButtonsConfigModal);
+el.btnCloseButtonsModal.addEventListener('click', closeButtonsConfigModal);
+el.btnCancelButtonsModal.addEventListener('click', closeButtonsConfigModal);
+
+el.btnAddHeaderBtn.addEventListener('click', () => {
+  const newBtn = {
+    id: `btn_custom_hdr_${Date.now()}`,
+    type: 'header',
+    targetHeader: 'x-request-id',
+    label: 'TraceID',
+    enabled: true,
+    hideIfMissing: false,
+  };
+  state.quickButtons.push(newBtn);
+  renderButtonConfigList();
+});
+
+el.btnAddTemplateBtn.addEventListener('click', () => {
+  const newBtn = {
+    id: `btn_custom_tpl_${Date.now()}`,
+    type: 'template',
+    targetId: state.templates[0]?.id || 'default',
+    label: 'Tpl2',
+    enabled: true,
+  };
+  state.quickButtons.push(newBtn);
+  renderButtonConfigList();
+});
+
+el.btnResetButtons.addEventListener('click', () => {
+  if (confirm('Reset quick buttons to default settings?')) {
+    state.quickButtons = JSON.parse(JSON.stringify(DEFAULT_QUICK_BUTTONS));
+    saveQuickButtons();
+    renderButtonConfigList();
+    renderTable();
+    showToast('Buttons reset to default');
+  }
+});
+
+el.btnSaveButtons.addEventListener('click', () => {
+  saveQuickButtons();
+  closeButtonsConfigModal();
+  renderTable();
+  showToast('Quick buttons configuration saved!');
+});
+
+/* ==========================================================================
+   Internationalization (i18n) runner
+   ========================================================================== */
+function applyI18n() {
+  if (typeof chrome === 'undefined' || !chrome.i18n || !chrome.i18n.getMessage) return;
+
+  document.querySelectorAll('[data-i18n]').forEach((node) => {
+    const key = node.getAttribute('data-i18n');
+    const msg = chrome.i18n.getMessage(key);
+    if (msg) node.textContent = msg;
+  });
+
+  document.querySelectorAll('[data-i18n-title]').forEach((node) => {
+    const key = node.getAttribute('data-i18n-title');
+    const msg = chrome.i18n.getMessage(key);
+    if (msg) node.title = msg;
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((node) => {
+    const key = node.getAttribute('data-i18n-placeholder');
+    const msg = chrome.i18n.getMessage(key);
+    if (msg) node.placeholder = msg;
+  });
+}
+applyI18n();
 
 // Handle incoming DevTools network request
 let reqCounter = 0;

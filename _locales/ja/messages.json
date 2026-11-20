@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Network+ (ネットワークリクエスト高速コピー＆テンプレート出力)",
+    "description": "Translation for extName"
+  },
+  "extDescription": {
+    "message": "開発者向けDevToolsネットワーク拡張：クリーンなcURL、Token抽出、カスタムテンプレート出力がワンクリック。",
+    "description": "Translation for extDescription"
+  },
+  "btnClear": {
+    "message": "クリア",
+    "description": "Translation for btnClear"
+  },
+  "chkPreserve": {
+    "message": "ログを保持",
+    "description": "Translation for chkPreserve"
+  },
+  "filterPlaceholder": {
+    "message": "フィルター (URL, パス, メソッド...)",
+    "description": "Translation for filterPlaceholder"
+  },
+  "btnTemplates": {
+    "message": "テンプレート",
+    "description": "Translation for btnTemplates"
+  },
+  "colName": {
+    "message": "名前",
+    "description": "Translation for colName"
+  },
+  "colStatus": {
+    "message": "ステータス",
+    "description": "Translation for colStatus"
+  },
+  "colMethod": {
+    "message": "メソッド",
+    "description": "Translation for colMethod"
+  },
+  "colType": {
+    "message": "タイプ",
+    "description": "Translation for colType"
+  },
+  "colSize": {
+    "message": "サイズ",
+    "description": "Translation for colSize"
+  },
+  "colTime": {
+    "message": "時間",
+    "description": "Translation for colTime"
+  },
+  "colActions": {
+    "message": "クイックコピー",
+    "description": "Translation for colActions"
+  },
+  "emptyRecording": {
+    "message": "ネットワークアクティビティを記録中...",
+    "description": "Translation for emptyRecording"
+  },
+  "emptyHint": {
+    "message": "検査対象のページで操作を行うとリクエストが表示されます。",
+    "description": "Translation for emptyHint"
+  },
+  "drawerTitle": {
+    "message": "リクエスト詳細",
+    "description": "Translation for drawerTitle"
+  },
+  "tabHeaders": {
+    "message": "ヘッダー",
+    "description": "Translation for tabHeaders"
+  },
+  "tabPayload": {
+    "message": "ペイロード",
+    "description": "Translation for tabPayload"
+  },
+  "tabResponse": {
+    "message": "レスポンス",
+    "description": "Translation for tabResponse"
+  },
+  "tabTemplate": {
+    "message": "テンプレート",
+    "description": "Translation for tabTemplate"
+  },
+  "btnConfigButtons": {
+    "message": "ボタン設定",
+    "description": "Translation for btnConfigButtons"
+  },
+  "configModalTitle": {
+    "message": "クイックコピーボタンのカスタマイズ",
+    "description": "Translation for configModalTitle"
+  },
+  "configAddHeaderBtn": {
+    "message": "+ ヘッダーボタンを追加",
+    "description": "Translation for configAddHeaderBtn"
+  },
+  "configAddTemplateBtn": {
+    "message": "+ テンプレートボタンを追加",
+    "description": "Translation for configAddTemplateBtn"
+  },
+  "modalSave": {
+    "message": "保存",
+    "description": "Translation for modalSave"
+  },
+  "modalClose": {
+    "message": "閉じる",
+    "description": "Translation for modalClose"
+  },
+  "modalResetDefaults": {
+    "message": "デフォルトに戻す",
+    "description": "Translation for modalResetDefaults"
+  }
+}

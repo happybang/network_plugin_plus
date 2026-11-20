@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Network+ (網路請求快速複製與範本匯出)",
+    "description": "Translation for extName"
+  },
+  "extDescription": {
+    "message": "專為開發者打造的 DevTools 網路封包增強面板：一鍵複製純淨 cURL、提取 Token、按自訂範本匯出介面資料。",
+    "description": "Translation for extDescription"
+  },
+  "btnClear": {
+    "message": "清空",
+    "description": "Translation for btnClear"
+  },
+  "chkPreserve": {
+    "message": "保留記錄",
+    "description": "Translation for chkPreserve"
+  },
+  "filterPlaceholder": {
+    "message": "篩選 (URL, 路徑, 請求方法...)",
+    "description": "Translation for filterPlaceholder"
+  },
+  "btnTemplates": {
+    "message": "範本",
+    "description": "Translation for btnTemplates"
+  },
+  "colName": {
+    "message": "名稱",
+    "description": "Translation for colName"
+  },
+  "colStatus": {
+    "message": "狀態",
+    "description": "Translation for colStatus"
+  },
+  "colMethod": {
+    "message": "方法",
+    "description": "Translation for colMethod"
+  },
+  "colType": {
+    "message": "類型",
+    "description": "Translation for colType"
+  },
+  "colSize": {
+    "message": "大小",
+    "description": "Translation for colSize"
+  },
+  "colTime": {
+    "message": "時間",
+    "description": "Translation for colTime"
+  },
+  "colActions": {
+    "message": "快速複製",
+    "description": "Translation for colActions"
+  },
+  "emptyRecording": {
+    "message": "正在記錄網路請求...",
+    "description": "Translation for emptyRecording"
+  },
+  "emptyHint": {
+    "message": "在檢查的頁面中進行操作即可檢視請求。",
+    "description": "Translation for emptyHint"
+  },
+  "drawerTitle": {
+    "message": "請求詳情",
+    "description": "Translation for drawerTitle"
+  },
+  "tabHeaders": {
+    "message": "標頭",
+    "description": "Translation for tabHeaders"
+  },
+  "tabPayload": {
+    "message": "載荷",
+    "description": "Translation for tabPayload"
+  },
+  "tabResponse": {
+    "message": "回應",
+    "description": "Translation for tabResponse"
+  },
+  "tabTemplate": {
+    "message": "範本",
+    "description": "Translation for tabTemplate"
+  },
+  "btnConfigButtons": {
+    "message": "設定按鈕",
+    "description": "Translation for btnConfigButtons"
+  },
+  "configModalTitle": {
+    "message": "自訂快速複製按鈕",
+    "description": "Translation for configModalTitle"
+  },
+  "configAddHeaderBtn": {
+    "message": "+ 新增 Header 按鈕",
+    "description": "Translation for configAddHeaderBtn"
+  },
+  "configAddTemplateBtn": {
+    "message": "+ 新增範本按鈕",
+    "description": "Translation for configAddTemplateBtn"
+  },
+  "modalSave": {
+    "message": "儲存",
+    "description": "Translation for modalSave"
+  },
+  "modalClose": {
+    "message": "關閉",
+    "description": "Translation for modalClose"
+  },
+  "modalResetDefaults": {
+    "message": "恢復預設",
+    "description": "Translation for modalResetDefaults"
+  }
+}

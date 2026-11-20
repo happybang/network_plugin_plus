@@ -14,12 +14,12 @@
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
         </svg>
-        <span>Clear</span>
+        <span data-i18n="btnClear">Clear</span>
       </button>
 
       <label class="toolbar-checkbox" title="Do not clear log on page reload">
         <input type="checkbox" id="chk-preserve">
-        <span>Preserve log</span>
+        <span data-i18n="chkPreserve">Preserve log</span>
       </label>
     </div>
 
@@ -31,7 +31,7 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="input-filter" placeholder="Filter (URL, path, method...)" autocomplete="off" spellcheck="false">
+        <input type="text" id="input-filter" data-i18n-placeholder="filterPlaceholder" placeholder="Filter (URL, path, method...)" autocomplete="off" spellcheck="false">
       </div>
 
       <div class="filter-pills" id="type-pills">
@@ -51,7 +51,7 @@
           <circle cx="12" cy="12" r="3"></circle>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
         </svg>
-        <span>Templates</span>
+        <span data-i18n="btnTemplates">Templates</span>
       </button>
       <span id="requests-count" class="count-badge">0 requests</span>
     </div>
@@ -62,19 +62,22 @@
     <!-- Left: Request Table -->
     <section class="table-section">
       <div class="table-header">
-        <div class="th col-name">Name</div>
-        <div class="th col-status">Status</div>
-        <div class="th col-method">Method</div>
-        <div class="th col-type">Type</div>
-        <div class="th col-size">Size</div>
-        <div class="th col-time">Time</div>
-        <div class="th col-actions">Quick Copy</div>
+        <div class="th col-name" data-i18n="colName">Name</div>
+        <div class="th col-status" data-i18n="colStatus">Status</div>
+        <div class="th col-method" data-i18n="colMethod">Method</div>
+        <div class="th col-type" data-i18n="colType">Type</div>
+        <div class="th col-size" data-i18n="colSize">Size</div>
+        <div class="th col-time" data-i18n="colTime">Time</div>
+        <div class="th col-actions">
+          <span data-i18n="colActions">Quick Copy</span>
+          <button id="btn-config-buttons" class="btn-config-gear" title="Customize Quick Copy Buttons">⚙️</button>
+        </div>
       </div>
       <div class="table-body" id="table-body">
         <div class="empty-state" id="empty-state">
           <div class="empty-icon">⚡</div>
-          <p>Recording network activity...</p>
-          <small>Perform actions in the inspected page to view requests.</small>
+          <p data-i18n="emptyRecording">Recording network activity...</p>
+          <small data-i18n="emptyHint">Perform actions in the inspected page to view requests.</small>
         </div>
       </div>
     </section>
@@ -82,14 +85,14 @@
     <!-- Right: Detail Drawer (Collapsible) -->
     <aside class="detail-drawer" id="detail-drawer">
       <div class="drawer-header">
-        <div class="drawer-title" id="drawer-title">Request Details</div>
+        <div class="drawer-title" id="drawer-title" data-i18n="drawerTitle">Request Details</div>
         <button class="btn-close" id="btn-close-drawer" title="Close details">✕</button>
       </div>
       <div class="drawer-tabs">
-        <button class="tab-btn active" data-tab="headers">Headers</button>
-        <button class="tab-btn" data-tab="payload">Payload</button>
-        <button class="tab-btn" data-tab="response">Response</button>
-        <button class="tab-btn" data-tab="template">Template</button>
+        <button class="tab-btn active" data-tab="headers" data-i18n="tabHeaders">Headers</button>
+        <button class="tab-btn" data-tab="payload" data-i18n="tabPayload">Payload</button>
+        <button class="tab-btn" data-tab="response" data-i18n="tabResponse">Response</button>
+        <button class="tab-btn" data-tab="template" data-i18n="tabTemplate">Template</button>
       </div>
       <div class="drawer-content">
         <!-- Tab: Headers -->
@@ -237,6 +240,35 @@
         <div class="footer-right">
           <button class="btn" id="btn-cancel-modal">Close</button>
           <button class="btn btn-primary" id="btn-save-template">Save Template</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Buttons Configuration Modal -->
+  <div class="modal-backdrop" id="modal-buttons-backdrop">
+    <div class="modal-dialog modal-dialog-medium">
+      <div class="modal-header">
+        <h3 class="modal-title" data-i18n="configModalTitle">Configure Quick Copy Buttons</h3>
+        <button class="btn-close" id="btn-close-buttons-modal">✕</button>
+      </div>
+
+      <div class="modal-body modal-body-single">
+        <p class="modal-intro">Customize the buttons shown in the "Quick Copy" column. Check to show/hide, edit labels, or reorder them.</p>
+
+        <div class="button-config-list" id="button-config-list"></div>
+
+        <div class="button-config-add-bar">
+          <button class="btn btn-sm" id="btn-add-header-btn" data-i18n="configAddHeaderBtn">+ Add Header Button</button>
+          <button class="btn btn-sm" id="btn-add-template-btn" data-i18n="configAddTemplateBtn">+ Add Template Button</button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="btn-reset-buttons" data-i18n="modalResetDefaults">Reset to Defaults</button>
+        <div class="footer-right">
+          <button class="btn" id="btn-cancel-buttons-modal" data-i18n="modalClose">Close</button>
+          <button class="btn btn-primary" id="btn-save-buttons" data-i18n="modalSave">Save</button>
         </div>
       </div>
     </div>

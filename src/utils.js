@@ -300,3 +300,162 @@ export function renderTemplate(templateStr, data = {}) {
   });
 }
 
+/**
+ * Default preset quick copy buttons
+ */
+export const DEFAULT_QUICK_BUTTONS = [
+  {
+    id: 'btn_tpl_default',
+    type: 'template',
+    targetId: 'default',
+    label: 'Tpl',
+    enabled: true,
+    isPrimary: true,
+  },
+  {
+    id: 'btn_curl_clean',
+    type: 'curl_clean',
+    label: 'cURL',
+    enabled: true,
+  },
+  {
+    id: 'btn_url',
+    type: 'url',
+    label: 'URL',
+    enabled: true,
+  },
+  {
+    id: 'btn_req',
+    type: 'req_body',
+    label: 'Req',
+    enabled: true,
+  },
+  {
+    id: 'btn_resp',
+    type: 'resp_body',
+    label: 'Resp',
+    enabled: true,
+  },
+  {
+    id: 'btn_auth',
+    type: 'header',
+    targetHeader: 'Authorization',
+    label: 'Auth',
+    enabled: true,
+    hideIfMissing: true,
+  },
+  {
+    id: 'btn_cookie',
+    type: 'header',
+    targetHeader: 'Cookie',
+    label: 'Cookie',
+    enabled: true,
+    hideIfMissing: true,
+  },
+];
+
+/**
+ * Evaluates a quick copy button action on a request.
+ * Returns { textToCopy, toastLabel, shouldHide }
+ */
+export function resolveQuickButtonAction(button, req, templates = [], cachedResponse = '') {
+  if (!button || !req) return { textToCopy: '', toastLabel: '', shouldHide: true };
+
+  if (button.enabled === false) {
+    return { shouldHide: true, textToCopy: '', toastLabel: '' };
+  }
+
+  switch (button.type) {
+    case 'template': {
+      let tpl = null;
+      if (button.targetId && button.targetId !== 'default') {
+        tpl = templates.find((t) => t.id === button.targetId);
+      }
+      if (!tpl) {
+        tpl = templates[0];
+      }
+      if (!tpl) {
+        return { textToCopy: '', toastLabel: 'No template found', shouldHide: false };
+      }
+      let pathname = '/';
+      try {
+        pathname = new URL(req.url).pathname;
+      } catch {
+        pathname = req.url || '/';
+      }
+      const ctx = {
+        url: req.url || '',
+        path: pathname,
+        method: req.method || 'GET',
+        status: req.status || 0,
+        statusText: req.statusText || '',
+        time: formatTime(req.time),
+        size: formatSize(req.size),
+        curl: generateCurl(req, { clean: true }),
+        curlFull: generateCurl(req, { clean: false }),
+        requestBody: formatBody(req.postData?.text || ''),
+        requestBodyRaw: req.postData?.text || '',
+        responseBody: formatBody(cachedResponse || ''),
+        responseBodyRaw: cachedResponse || '',
+        requestHeaders: req.requestHeaders || req.headers || [],
+        responseHeaders: req.responseHeaders || [],
+      };
+      return {
+        textToCopy: renderTemplate(tpl.content, ctx),
+        toastLabel: `Copied: ${tpl.name}`,
+        shouldHide: false,
+      };
+    }
+    case 'curl_clean': {
+      return {
+        textToCopy: generateCurl(req, { clean: true }),
+        toastLabel: 'Copied clean cURL',
+        shouldHide: false,
+      };
+    }
+    case 'curl_full': {
+      return {
+        textToCopy: generateCurl(req, { clean: false }),
+        toastLabel: 'Copied full cURL',
+        shouldHide: false,
+      };
+    }
+    case 'url': {
+      return {
+        textToCopy: req.url || '',
+        toastLabel: 'Copied URL',
+        shouldHide: false,
+      };
+    }
+    case 'req_body': {
+      return {
+        textToCopy: formatBody(req.postData?.text || ''),
+        toastLabel: 'Copied Request Body',
+        shouldHide: false,
+      };
+    }
+    case 'resp_body': {
+      return {
+        textToCopy: formatBody(cachedResponse || ''),
+        toastLabel: 'Copied Response Body',
+        shouldHide: false,
+      };
+    }
+    case 'header': {
+      const headers = req.requestHeaders || req.headers || [];
+      const val = getHeader(headers, button.targetHeader);
+      if (!val && button.hideIfMissing) {
+        return { textToCopy: '', toastLabel: '', shouldHide: true };
+      }
+      return {
+        textToCopy: val || '',
+        toastLabel: `Copied ${button.targetHeader}`,
+        shouldHide: false,
+      };
+    }
+    default:
+      return { textToCopy: '', toastLabel: '', shouldHide: false };
+  }
+}
+
+

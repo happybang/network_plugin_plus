@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Network+ Chrome Web Store Screenshot Generator (1280x800)</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    .intro {
+      max-width: 800px;
+      text-align: center;
+    }
+    .intro h1 {
+      font-size: 28px;
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
+    .intro p {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .slide-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .download-btn {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .download-btn:hover {
+      background: #0369a1;
+    }
+
+    /* Standard Chrome Web Store Screenshot Canvas (1280x800) */
+    .screenshot-canvas {
+      width: 1280px;
+      height: 800px;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      padding: 48px;
+    }
+
+    /* Gradients */
+    .gradient-blue { background: radial-gradient(circle at 80% 20%, #1e3a8a 0%, #0f172a 70%); }
+    .gradient-purple { background: radial-gradient(circle at 80% 20%, #4c1d95 0%, #0f172a 70%); }
+    .gradient-emerald { background: radial-gradient(circle at 80% 20%, #064e3b 0%, #0f172a 70%); }
+    .gradient-cyan { background: radial-gradient(circle at 80% 20%, #164e63 0%, #0f172a 70%); }
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .title {
+      font-size: 34px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-size: 16px;
+      color: #94a3b8;
+    }
+
+    /* DevTools Window Mockup */
+    .window-mockup {
+      flex: 1;
+      background: #202124;
+      border: 1px solid #3c4043;
+      border-radius: 8px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .window-topbar {
+      height: 36px;
+      background: #292a2d;
+      border-bottom: 1px solid #3c4043;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 16px;
+    }
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .window-tabs {
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      color: #9aa0a6;
+      font-weight: 500;
+    }
+    .window-tab.active {
+      color: #8ab4f8;
+      border-bottom: 2px solid #8ab4f8;
+      padding-bottom: 7px;
+    }
+
+    .window-body {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      font-size: 11px;
+    }
+    .mock-table {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #3c4043;
+      background: #202124;
+    }
+    .mock-row {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border-bottom: 1px solid #2e3134;
+      color: #e8eaed;
+      gap: 12px;
+    }
+    .mock-row.selected {
+      background: #273b5e;
+    }
+    .mock-row-header {
+      background: #292a2d;
+      font-weight: 600;
+      color: #9aa0a6;
+      height: 28px;
+    }
+    .col-req-name { flex: 2; font-family: monospace; }
+    .col-req-status { width: 50px; font-weight: bold; color: #81c995; }
+    .col-req-method { width: 55px; font-weight: bold; color: #8ab4f8; }
+    .col-req-actions { display: flex; gap: 4px; }
+
+    .pill-btn {
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 500;
+      border: 1px solid #4d5156;
+      background: #35363a;
+      color: #8ab4f8;
+    }
+    .pill-primary {
+      background: #1a73e8;
+      color: #ffffff;
+      border-color: #1a73e8;
+      font-weight: 600;
+    }
+
+    .mock-drawer {
+      width: 440px;
+      background: #202124;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      gap: 12px;
+    }
+    .code-box {
+      flex: 1;
+      background: #292a2d;
+      border: 1px solid #3c4043;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 11px;
+      color: #e8eaed;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .highlight-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid #22c55e;
+      color: #4ade80;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      width: fit-content;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="intro">
+    <h1>🚀 Network+ Chrome Web Store Screenshots (1280x800)</h1>
+    <p>These graphics meet the exact 1280x800 specifications for Chrome Web Store Developer Dashboard. Click "Download PNG" under each card to save high-resolution store listing screenshots.</p>
+  </div>
+
+  <!-- SLIDE 1 -->
+  <div class="slide-wrapper">
+    <div class="slide-controls">
+      <strong>Screenshot 1: Core Value (Clean cURL & 1-Click Copy)</strong>
+      <button class="download-btn" onclick="captureSlide('slide-1', 'network_plus_screenshot_1.png')">Download 1280x800 PNG</button>
+    </div>
+    <div id="slide-1" class="screenshot-canvas gradient-blue">
+      <div class="card-header">
+        <span class="badge">Zero Noise • One-Click</span>
+        <h2 class="title">Stop Wasting Time on Repetitive Network Copying</h2>
+        <p class="subtitle">Extract clean cURL, Authorization tokens, and request payloads with a single click right inside DevTools.</p>
+      </div>
+
+      <div class="window-mockup">
+        <div class="window-topbar">
+          <div class="window-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+          <div class="window-tabs">
+            <span class="window-tab">Elements</span>
+            <span class="window-tab">Console</span>
+            <span class="window-tab">Network</span>
+            <span class="window-tab active">Network+</span>
+            <span class="window-tab">Application</span>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="mock-table">
+            <div class="mock-row mock-row-header">
+              <span class="col-req-name">Name</span>
+              <span class="col-req-status">Status</span>
+              <span class="col-req-method">Method</span>
+              <span class="col-req-actions">Quick Copy Actions</span>
+            </div>
+            <div class="mock-row selected">
+              <span class="col-req-name">/api/v1/auth/user-profile?ref=nav</span>
+              <span class="col-req-status">200</span>
+              <span class="col-req-method">POST</span>
+              <div class="col-req-actions">
+                <span class="pill-btn pill-primary">Tpl</span>
+                <span class="pill-btn">cURL</span>
+                <span class="pill-btn">URL</span>
+                <span class="pill-btn">Req</span>
+                <span class="pill-btn">Resp</span>
+                <span class="pill-btn">Auth</span>
+              </div>
+            </div>
+            <div class="mock-row">
+              <span class="col-req-name">/api/v1/orders/summary</span>
+              <span class="col-req-status">200</span>
+              <span class="col-req-method">GET</span>
+              <div class="col-req-actions">
+                <span class="pill-btn pill-primary">Tpl</span>
+                <span class="pill-btn">cURL</span>
+                <span class="pill-btn">URL</span>
+                <span class="pill-btn">Req</span>
+                <span class="pill-btn">Resp</span>
+                <span class="pill-btn">Cookie</span>
+              </div>
+            </div>
+            <div class="mock-row">
+              <span class="col-req-name">/api/v1/analytics/telemetry</span>
+              <span class="col-req-status">204</span>
+              <span class="col-req-method">POST</span>
+              <div class="col-req-actions">
+                <span class="pill-btn pill-primary">Tpl</span>
+                <span class="pill-btn">cURL</span>
+                <span class="pill-btn">URL</span>
+                <span class="pill-btn">Req</span>
+                <span class="pill-btn">Resp</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mock-drawer">
+            <div class="highlight-badge">⚡️ Clean cURL (No 20-line browser noise)</div>
+            <div class="code-box">curl 'https://api.example.com/v1/auth/user-profile' \
+  -X POST \
+  -H 'Authorization: Bearer eyJhbGciOi...' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"userId":1001,"role":"admin"}'</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide-wrapper">
+    <div class="slide-controls">
+      <strong>Screenshot 2: Custom Template Engine (Game Changer)</strong>
+      <button class="download-btn" onclick="captureSlide('slide-2', 'network_plus_screenshot_2.png')">Download 1280x800 PNG</button>
+    </div>
+    <div id="slide-2" class="screenshot-canvas gradient-purple">
+      <div class="card-header">
+        <span class="badge">Fully Customizable</span>
+        <h2 class="title">Export Any API Bug Report with Your Own Template</h2>
+        <p class="subtitle">Use {{url}}, {{header.Authorization}}, and {{request.body}} to generate instant, formatted bug reports.</p>
+      </div>
+
+      <div class="window-mockup">
+        <div class="window-topbar">
+          <div class="window-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+          <div class="window-tabs">
+            <span class="window-tab">Headers</span>
+            <span class="window-tab">Payload</span>
+            <span class="window-tab">Response</span>
+            <span class="window-tab active">Template (Live Preview)</span>
+          </div>
+        </div>
+        <div class="window-body" style="padding: 24px; gap: 24px;">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+            <div style="font-weight: 600; color: #a78bfa;">Active Template: Bug Report</div>
+            <div class="code-box">[API] {{method}} {{path}} ({{status}})
+[URL] {{url}}
+[Token] {{header.authorization}}
+[Payload]:
+{{request.body}}
+[Response]:
+{{response.body}}</div>
+          </div>
+          <div style="flex: 1.2; display: flex; flex-direction: column; gap: 12px;">
+            <div class="highlight-badge">📋 Output Copied to Clipboard in 0.2s</div>
+            <div class="code-box" style="background:#1e1e24; color:#38bdf8;">[API] POST /api/v1/auth/user-profile (200)
+[URL] https://api.example.com/v1/auth/user-profile
+[Token] Bearer eyJhbGciOiJIUzI1NiJ9...
+[Payload]:
+{
+  "userId": 1001,
+  "role": "admin"
+}
+[Response]:
+{
+  "code": 0,
+  "message": "success"
+}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide-wrapper">
+    <div class="slide-controls">
+      <strong>Screenshot 3: Customizable Quick Buttons</strong>
+      <button class="download-btn" onclick="captureSlide('slide-3', 'network_plus_screenshot_3.png')">Download 1280x800 PNG</button>
+    </div>
+    <div id="slide-3" class="screenshot-canvas gradient-emerald">
+      <div class="card-header">
+        <span class="badge">Your Workflow • Your Way</span>
+        <h2 class="title">Personalize Your Quick Copy Row Buttons</h2>
+        <p class="subtitle">Add multiple template buttons, custom header extractors, change labels, or reorder with ease.</p>
+      </div>
+
+      <div class="window-mockup" style="padding: 24px;">
+        <div style="background:#292a2d; border-radius:8px; border:1px solid #3c4043; padding:20px; display:flex; flex-direction:column; gap:12px;">
+          <div style="font-size:14px; font-weight:700; color:#4ade80;">⚙️ Configure Quick Copy Buttons</div>
+          <div style="display:flex; align-items:center; gap:12px; background:#202124; padding:8px 12px; border-radius:4px; border:1px solid #3c4043;">
+            <input type="checkbox" checked>
+            <span style="background:#38bdf8; color:#0f172a; padding:2px 8px; border-radius:3px; font-weight:bold; font-size:10px;">TEMPLATE</span>
+            <input type="text" value="BugReport" style="background:#292a2d; color:#fff; border:1px solid #4d5156; padding:4px 8px; border-radius:3px; width:100px;">
+            <span style="color:#94a3b8; font-size:11px;">Target: Bug Report Template</span>
+            <span style="margin-left:auto; color:#a78bfa;">▲ ▼</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; background:#202124; padding:8px 12px; border-radius:4px; border:1px solid #3c4043;">
+            <input type="checkbox" checked>
+            <span style="background:#34d399; color:#0f172a; padding:2px 8px; border-radius:3px; font-weight:bold; font-size:10px;">HEADER</span>
+            <input type="text" value="TraceID" style="background:#292a2d; color:#fff; border:1px solid #4d5156; padding:4px 8px; border-radius:3px; width:100px;">
+            <span style="color:#94a3b8; font-size:11px;">Header: x-trace-id</span>
+            <span style="margin-left:auto; color:#a78bfa;">▲ ▼</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; background:#202124; padding:8px 12px; border-radius:4px; border:1px solid #3c4043;">
+            <input type="checkbox" checked>
+            <span style="background:#f472b6; color:#0f172a; padding:2px 8px; border-radius:3px; font-weight:bold; font-size:10px;">cURL</span>
+            <input type="text" value="cURL" style="background:#292a2d; color:#fff; border:1px solid #4d5156; padding:4px 8px; border-radius:3px; width:100px;">
+            <span style="color:#94a3b8; font-size:11px;">Clean cURL Generator</span>
+            <span style="margin-left:auto; color:#a78bfa;">▲ ▼</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    async function captureSlide(elementId, filename) {
+      const el = document.getElementById(elementId);
+      const canvas = await html2canvas(el, {
+        width: 1280,
+        height: 800,
+        scale: 1,
+        useCORS: true,
+        backgroundColor: null
+      });
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  </script>
+</body>
+</html>

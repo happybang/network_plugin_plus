@@ -1,0 +1,110 @@
+{
+  "extName": {
+    "message": "Network+ (Быстрое копирование сетевых запросов и шаблоны)",
+    "description": "Translation for extName"
+  },
+  "extDescription": {
+    "message": "Панель DevTools для быстрого копирования чистых команд cURL, ответов, тела запроса и заголовков по шаблону в 1 клик.",
+    "description": "Translation for extDescription"
+  },
+  "btnClear": {
+    "message": "Очистить",
+    "description": "Translation for btnClear"
+  },
+  "chkPreserve": {
+    "message": "Сохранять журнал",
+    "description": "Translation for chkPreserve"
+  },
+  "filterPlaceholder": {
+    "message": "Фильтр (URL, путь, метод...)",
+    "description": "Translation for filterPlaceholder"
+  },
+  "btnTemplates": {
+    "message": "Шаблоны",
+    "description": "Translation for btnTemplates"
+  },
+  "colName": {
+    "message": "Имя",
+    "description": "Translation for colName"
+  },
+  "colStatus": {
+    "message": "Статус",
+    "description": "Translation for colStatus"
+  },
+  "colMethod": {
+    "message": "Метод",
+    "description": "Translation for colMethod"
+  },
+  "colType": {
+    "message": "Тип",
+    "description": "Translation for colType"
+  },
+  "colSize": {
+    "message": "Размер",
+    "description": "Translation for colSize"
+  },
+  "colTime": {
+    "message": "Время",
+    "description": "Translation for colTime"
+  },
+  "colActions": {
+    "message": "Быстрое копирование",
+    "description": "Translation for colActions"
+  },
+  "emptyRecording": {
+    "message": "Запись сетевой активности...",
+    "description": "Translation for emptyRecording"
+  },
+  "emptyHint": {
+    "message": "Выполните действия на странице для просмотра запросов.",
+    "description": "Translation for emptyHint"
+  },
+  "drawerTitle": {
+    "message": "Детали запроса",
+    "description": "Translation for drawerTitle"
+  },
+  "tabHeaders": {
+    "message": "Заголовки",
+    "description": "Translation for tabHeaders"
+  },
+  "tabPayload": {
+    "message": "Полезная нагрузка",
+    "description": "Translation for tabPayload"
+  },
+  "tabResponse": {
+    "message": "Ответ",
+    "description": "Translation for tabResponse"
+  },
+  "tabTemplate": {
+    "message": "Шаблон",
+    "description": "Translation for tabTemplate"
+  },
+  "btnConfigButtons": {
+    "message": "Настроить кнопки",
+    "description": "Translation for btnConfigButtons"
+  },
+  "configModalTitle": {
+    "message": "Настройка кнопок быстрого копирования",
+    "description": "Translation for configModalTitle"
+  },
+  "configAddHeaderBtn": {
+    "message": "+ Добавить кнопку заголовка",
+    "description": "Translation for configAddHeaderBtn"
+  },
+  "configAddTemplateBtn": {
+    "message": "+ Добавить кнопку шаблона",
+    "description": "Translation for configAddTemplateBtn"
+  },
+  "modalSave": {
+    "message": "Сохранить",
+    "description": "Translation for modalSave"
+  },
+  "modalClose": {
+    "message": "Закрыть",
+    "description": "Translation for modalClose"
+  },
+  "modalResetDefaults": {
+    "message": "Сбросить по умолчанию",
+    "description": "Translation for modalResetDefaults"
+  }
+}
